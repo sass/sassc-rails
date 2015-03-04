@@ -1,0 +1,27 @@
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+------------------------------------
+SassRailsTest: test_test_setup_works
+------------------------------------
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+------------------------------------
+SassRailsTest: test_test_setup_works
+------------------------------------
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+------------------------------------
+SassRailsTest: test_test_setup_works
+------------------------------------
+  [1m[35m (0.0ms)[0m  rollback transaction
+------------------------------------
+SassRailsTest: test_test_setup_works
+------------------------------------
+------------------------------------
+SassRailsTest: test_test_setup_works
+------------------------------------
+------------------------------------
+SassRailsTest: test_test_setup_works
+------------------------------------
+------------------------------------
+SassRailsTest: test_test_setup_works
+------------------------------------
