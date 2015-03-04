@@ -23,8 +23,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "minitest", "~> 5.5.1"
   spec.add_development_dependency 'rails'
-  spec.add_development_dependency 'sqlite3'
+
+  # unfortunately we require sass for now, so that we can
+  # reuse portions of the sprockets template
+  spec.add_dependency 'sass'
 
   spec.add_dependency "sassc", "0.0.7"
   spec.add_dependency 'railties', '>= 4.0.0', '< 5.0'
+  spec.add_dependency 'sprockets', '3.0.0.beta.6'
 end

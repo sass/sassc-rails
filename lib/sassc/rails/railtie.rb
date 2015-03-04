@@ -54,7 +54,7 @@ module SassC::Rails
 
       if app.assets
         app.assets.register_engine '.sass', SassC::Rails::SassTemplate
-        app.assets.register_engine '.scss', SassC::Rails::SassTemplate
+        app.assets.register_engine '.scss', SassC::Rails::ScssTemplate
 
         app.assets.context_class.class_eval do
           class_attribute :sass_config

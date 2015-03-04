@@ -68,6 +68,12 @@ module SassC::Rails
       end
     end
   end
+
+  class ScssTemplate < SassTemplate
+    def self.syntax
+      :scss
+    end
+  end
 end
 
 
