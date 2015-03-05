@@ -1,15 +1,11 @@
-# Configure Rails Environment
-ENV["RAILS_ENV"] = "test"
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(File.dirname(__FILE__))
 
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
-require "rails/test_help"
+require "pry"
+require "fileutils"
+require 'rails'
+require 'bundler/setup'
 
-Rails.backtrace_cleaner.remove_silencers!
+Bundler.require
 
-# Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
-
-# Load fixtures from the engine
-if ActiveSupport::TestCase.method_defined?(:fixture_path=)
-  ActiveSupport::TestCase.fixture_path = File.expand_path("../fixtures", __FILE__)
-end

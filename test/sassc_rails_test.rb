@@ -1,19 +1,30 @@
 require "test_helper"
-require "pry"
+require "minitest/autorun"
 
-class SassRailsTest < ActiveSupport::TestCase
+class SassRailsTest < MiniTest::Test
   def render_asset(asset)
-    Dummy::Application.assets[asset].to_s
+    app.assets[asset].to_s
   end
 
+  attr_reader :app
+
   def setup
-    Dummy::Application.assets.css_compressor = nil
+    @app = Class.new(Rails::Application)
+    @app.config.active_support.deprecation = :log
+    @app.config.eager_load = false
+
+    @app.config.root = File.join(File.dirname(__FILE__), "dummy")
+    @app.config.active_support.test_order = :sorted
+
+    Rails.backtrace_cleaner.remove_silencers!
+    @app.initialize!
   end
 
   def teardown
+    FileUtils.remove_dir "#{Rails.root}/tmp"
   end
 
-  test "test setup works" do
+  def test_setup_works
     asset = render_asset("application.scss")
 
     assert_equal <<-CSS, asset
@@ -22,13 +33,13 @@ class SassRailsTest < ActiveSupport::TestCase
     CSS
   end
 
-  test "raises SassC syntax error" do
+  def test_raises_sassc_syntax_error
     assert_raises(SassC::SyntaxError) do
       render_asset("syntax_error.scss")
     end
   end
 
-  test "ALL sass asset paths work" do
+  def test_all_sass_asset_paths_work
     css_output = render_asset("helpers_test.scss")
 
     skip
@@ -39,7 +50,7 @@ class SassRailsTest < ActiveSupport::TestCase
     assert_match %r{image-url:\s*url\(/assets/rails.png\)},                       css_output, 'image-url:\s*url\(/assets/rails.png\)'
   end
 
-  test "sass asset paths work" do
+  def sass_asset_paths_work
     css_output = render_asset("helpers_test.scss")
 
     assert_match %r{video-path:\s*"/videos/rails.mp4"},                           css_output, 'video-path:\s*"/videos/rails.mp4"'
