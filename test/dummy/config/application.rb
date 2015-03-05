@@ -33,5 +33,10 @@ module Dummy
     # config.i18n.default_locale = :de
 
     config.secret_key_base = "test"
+
+    # Also turned cache_classes to FALSE to disable caching
+    config.assets.configure do |env|
+      env.cache = ActiveSupport::Cache::NullStore
+    end
   end
 end
