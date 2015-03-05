@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = SassC::Rails::VERSION
   spec.authors       = ["Ryan Boland"]
   spec.email         = ["bolandryanm@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{Integrate SassC-Ruby into Rails.}
+  spec.description   = %q{Integrate SassC-Ruby into Rails.}
+  spec.homepage      = "https://github.com/bolandrm/sassc-rails"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -29,6 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'sass'
 
   spec.add_dependency "sassc", "0.0.7"
-  spec.add_dependency 'railties', '>= 4.0.0', '< 5.0'
+  spec.add_dependency 'railties'
   spec.add_dependency 'sprockets', '3.0.0.beta.6'
 end

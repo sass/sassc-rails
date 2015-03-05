@@ -1,6 +1,6 @@
-# Sassc::Rails
+# SassC::Rails
 
-WIP.
+## WIP.
 
 ## Installation
 
@@ -14,9 +14,6 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install sassc-rails
 
 ## Usage
 
