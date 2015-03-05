@@ -10,7 +10,6 @@ module SassC::Rails
       options = {
         filename: input[:filename],
         syntax: self.class.syntax,
-        #cache_store: CacheStore.new(input[:cache], @cache_version),
         load_paths: input[:environment].paths,
         sprockets: {
           context: context,
@@ -32,6 +31,7 @@ module SassC::Rails
 
       context.metadata.merge(data: css)
     end
+
   end
 
   class ScssTemplate < SassTemplate

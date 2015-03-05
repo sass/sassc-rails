@@ -36,9 +36,9 @@ class SassRailsTest < MiniTest::Test
   end
 
   def test_all_sass_asset_paths_work
-    css_output = render_asset("helpers_test.scss")
-
     skip
+
+    css_output = render_asset("helpers_test.scss")
 
     assert_match %r{asset-path:\s*"/assets/rails.png"},                           css_output, 'asset-path:\s*"/assets/rails.png"'
     assert_match %r{asset-url:\s*url\(/assets/rails.png\)},                       css_output, 'asset-url:\s*url\(/assets/rails.png\)'
