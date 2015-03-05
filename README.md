@@ -1,6 +1,6 @@
-# SassC::Rails
+# SassC::Rails [![Build Status](https://travis-ci.org/bolandrm/sassc-rails.svg)](https://travis-ci.org/bolandrm/sassc-rails) [![Gem Version](https://badge.fury.io/rb/sassc-rails.svg)](http://badge.fury.io/rb/sassc-rails)
 
-## WIP.
+### WIP.
 
 ## Installation
 
