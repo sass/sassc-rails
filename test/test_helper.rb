@@ -5,6 +5,7 @@ require "pry"
 require "fileutils"
 require 'rails'
 require 'bundler/setup'
+require "minitest/autorun"
 
 Bundler.require
 

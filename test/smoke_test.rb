@@ -1,10 +1,10 @@
-require "minitest/autorun"
+require "test_helper"
 require "sassc"
 
 SAMPLE_SASS_STRING = "$size: 30px; .hi { width: $size; }"
 SAMPLE_CSS_OUTPUT = ".hi {\n  width: 30px; }\n"
 
-class DataContext < MiniTest::Test
+class DataContextTest < MiniTest::Test
   def teardown
     SassC::Native.delete_data_context(@data_context)
   end

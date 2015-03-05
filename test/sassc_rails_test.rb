@@ -1,5 +1,4 @@
 require "test_helper"
-require "minitest/autorun"
 
 class SassRailsTest < MiniTest::Test
   def render_asset(asset)
@@ -50,7 +49,7 @@ class SassRailsTest < MiniTest::Test
     assert_match %r{image-url:\s*url\(/assets/rails.png\)},                       css_output, 'image-url:\s*url\(/assets/rails.png\)'
   end
 
-  def sass_asset_paths_work
+  def test_sass_asset_paths_work
     css_output = render_asset("helpers_test.scss")
 
     assert_match %r{video-path:\s*"/videos/rails.mp4"},                           css_output, 'video-path:\s*"/videos/rails.mp4"'
