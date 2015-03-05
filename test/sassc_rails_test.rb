@@ -1,26 +1,23 @@
 require "test_helper"
 
 class SassRailsTest < MiniTest::Test
-  def render_asset(asset)
-    app.assets[asset].to_s
-  end
-
   attr_reader :app
 
   def setup
     @app = Class.new(Rails::Application)
     @app.config.active_support.deprecation = :log
     @app.config.eager_load = false
-
     @app.config.root = File.join(File.dirname(__FILE__), "dummy")
-    @app.config.active_support.test_order = :sorted
-
     Rails.backtrace_cleaner.remove_silencers!
     @app.initialize!
   end
 
   def teardown
     FileUtils.remove_dir "#{Rails.root}/tmp"
+  end
+
+  def render_asset(asset)
+    app.assets[asset].to_s
   end
 
   def test_setup_works
