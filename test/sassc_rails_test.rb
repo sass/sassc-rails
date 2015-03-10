@@ -74,4 +74,28 @@ class SassRailsTest < MiniTest::Test
     "SUVORK5CYII%3D"
     assert_equal asset_data_url_expected, asset_data_url_match
   end
+
+  def test_sass_imports_work_correctly
+    css_output = render_asset("imports_test.scss")
+    assert_match /main/,                     css_output
+    assert_match /top-level/,                css_output
+    assert_match /partial-sass/,             css_output
+    assert_match /partial-scss/,             css_output
+    assert_match /sub-folder-relative-sass/, css_output
+    assert_match /sub-folder-relative-scss/, css_output
+    assert_match /not-a-partial/,            css_output
+    assert_match /plain-old-css/,            css_output
+    assert_match /another-plain-old-css/,    css_output
+    assert_match /without-css-ext/,          css_output
+    assert_match /css-erb-handler/,          css_output
+    assert_match /scss-erb-handler/,         css_output
+    assert_match /sass-erb-handler/,         css_output
+    assert_match /css-sass-erb-handler/,     css_output
+    assert_match /css-scss-erb-handler/,     css_output
+    assert_match /default-old-css/,          css_output
+
+    # skip for now
+    # assert_match /globbed/,                  css_output
+    # assert_match /nested-glob/,              css_output
+  end
 end

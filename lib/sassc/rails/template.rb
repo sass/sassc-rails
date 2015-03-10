@@ -11,6 +11,7 @@ module SassC::Rails
         filename: input[:filename],
         syntax: self.class.syntax,
         load_paths: input[:environment].paths,
+        importer: SassC::Rails::Importer,
         sprockets: {
           context: context,
           environment: input[:environment],
