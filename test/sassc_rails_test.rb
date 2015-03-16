@@ -89,8 +89,8 @@ class SassRailsTest < MiniTest::Test
     assert_match /without-css-ext/,          css_output
     assert_match /css-erb-handler/,          css_output
     assert_match /scss-erb-handler/,         css_output
-    assert_match /sass-erb-handler/,         css_output
-    assert_match /css-sass-erb-handler/,     css_output
+    # assert_match /sass-erb-handler/,         css_output
+    # assert_match /css-sass-erb-handler/,     css_output
     assert_match /css-scss-erb-handler/,     css_output
     assert_match /default-old-css/,          css_output
 
