@@ -25,11 +25,6 @@ module SassC::Rails
         engine.render
       end
 
-      # Track all imported files
-      engine.dependencies.map do |dependency|
-        context.metadata[:dependency_paths] << dependency.options[:filename]
-      end
-
       context.metadata.merge(data: css)
     end
 
