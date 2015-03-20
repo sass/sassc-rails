@@ -3,7 +3,6 @@ require 'tilt'
 module SassC
   module Rails
     class Importer < SassC::Importer
-
       class Extension
         attr_reader :postfix
 
@@ -11,7 +10,7 @@ module SassC
           @postfix = postfix
         end
 
-        def import_for(original_path, parent_path, full_path)
+        def import_for(original_path, parent_path, full_path, options)
           SassC::Importer::Import.new(full_path)
         end
       end
@@ -21,7 +20,7 @@ module SassC
           ".css"
         end
 
-        def import_for(original_path, parent_path, full_path)
+        def import_for(original_path, parent_path, full_path, options)
           import_path = full_path.gsub(/\.css$/,"")
           SassC::Importer::Import.new(import_path)
         end
@@ -32,9 +31,9 @@ module SassC
           super
         end
 
-        def import_for(original_path, parent_path, full_path)
+        def import_for(original_path, parent_path, full_path, options)
           template = Tilt::ERBTemplate.new(full_path)
-          parsed_erb = template.render
+          parsed_erb = template.render(options[:sprockets][:context], {})
           SassC::Importer::Import.new(full_path, source: parsed_erb)
         end
       end
@@ -99,7 +98,7 @@ module SassC
               try_path = File.join(search_path, file_name + extension.postfix)
               if File.exists?(try_path)
                 record_import_as_dependency try_path
-                return extension.import_for(path, parent_path, try_path)
+                return extension.import_for(path, parent_path, try_path, options)
               end
             end
           end
