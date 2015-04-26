@@ -8,19 +8,42 @@ class SassRailsTest < MiniTest::Test
     @app.config.active_support.deprecation = :log
     @app.config.eager_load = false
     @app.config.root = File.join(File.dirname(__FILE__), "dummy")
+    @app.config.log_level = :debug
+
+    # reset config back to default
+    @app.config.sass = ActiveSupport::OrderedOptions.new
+    @app.config.sass.preferred_syntax = :scss
+    @app.config.sass.load_paths       = []
+
     Rails.backtrace_cleaner.remove_silencers!
-    @app.initialize!
   end
 
   def teardown
-    FileUtils.remove_dir "#{Rails.root}/tmp"
+    directory = "#{Rails.root}/tmp"
+    FileUtils.remove_dir(directory) if File.directory?(directory)
   end
 
   def render_asset(asset)
     app.assets[asset].to_s
   end
 
+  def initialize!
+    @app.initialize!
+  end
+
+  def initialize_dev!
+    Rails.env = "development"
+    @app.initialize!
+  end
+
+  def initialize_prod!
+    Rails.env = "production"
+    @app.initialize!
+  end
+
   def test_setup_works
+    initialize!
+
     asset = render_asset("application.scss")
 
     assert_equal <<-CSS, asset
@@ -30,6 +53,8 @@ class SassRailsTest < MiniTest::Test
   end
 
   def test_raises_sassc_syntax_error
+    initialize!
+
     assert_raises(SassC::SyntaxError) do
       render_asset("syntax_error.scss")
     end
@@ -37,6 +62,8 @@ class SassRailsTest < MiniTest::Test
 
   def test_all_sass_asset_paths_work
     skip
+
+    initialize!
 
     css_output = render_asset("helpers_test.scss")
 
@@ -47,6 +74,8 @@ class SassRailsTest < MiniTest::Test
   end
 
   def test_sass_asset_paths_work
+    initialize!
+
     css_output = render_asset("helpers_test.scss")
 
     assert_match %r{video-path:\s*"/videos/rails.mp4"},                           css_output, 'video-path:\s*"/videos/rails.mp4"'
@@ -76,6 +105,8 @@ class SassRailsTest < MiniTest::Test
   end
 
   def test_sass_imports_work_correctly
+    initialize!
+
     css_output = render_asset("imports_test.scss")
     assert_match /main/,                     css_output
     assert_match /top-level/,                css_output
@@ -89,13 +120,106 @@ class SassRailsTest < MiniTest::Test
     assert_match /without-css-ext/,          css_output
     assert_match /css-erb-handler/,          css_output
     assert_match /scss-erb-handler/,         css_output
-    # assert_match /sass-erb-handler/,         css_output
-    # assert_match /css-sass-erb-handler/,     css_output
+    assert_match /sass-erb-handler/,         css_output
+
+    # do these two actually test anything?
+    # should the extension be changed?
+    assert_match /css-sass-erb-handler/,     css_output
     assert_match /css-scss-erb-handler/,     css_output
+
     assert_match /default-old-css/,          css_output
 
     # skip for now
     # assert_match /globbed/,                  css_output
     # assert_match /nested-glob/,              css_output
   end
+
+  def test_style_config_item_is_defaulted_to_expanded_in_development_mode
+    initialize_dev!
+    assert_equal :expanded, Rails.application.config.sass.style
+  end
+
+  def test_style_config_item_is_honored_in_development_mode
+    @app.config.sass.style = :nested
+    initialize_dev!
+    assert_equal :nested, Rails.application.config.sass.style
+  end
+
+  def test_style_config_item_is_not_honored_if_environment_is_not_development
+    initialize_prod!
+    assert_equal :compressed, Rails.application.config.sass.style
+  end
+
+  def test_context_is_being_passed_to_erb_render
+    initialize!
+
+    css_output = render_asset("erb_render_with_context.css.erb")
+    assert_match /@font-face/, css_output
+  end
+
+  #test 'sprockets require works correctly' do
+  #  skip
+
+  #  within_rails_app('scss_project') do |app_root|
+  #    css_output = asset_output('css_application.css')
+  #    assert_match /globbed/, css_output
+
+  #    if File.exists?("#{app_root}/log/development.log")
+  #      log_file = "#{app_root}/log/development.log"
+  #    elsif File.exists?("#{app_root}/log/test.log")
+  #      log_file = "#{app_root}/log/test.log"
+  #    else
+  #      flunk "log file was not created"
+  #    end
+
+  #    log_output = File.open(log_file).read
+  #    refute_match /Warning/, log_output
+  #  end
+  #end
+
+  #test 'sprockets directives are ignored within an import' do
+  #  skip
+
+  #  css_output = sprockets_render('scss_project', 'import_css_application.css')
+  #  assert_match /\.css-application/,        css_output
+  #  assert_match /\.import-css-application/, css_output
+  #end
+
+  #test 'globbed imports work when new file is added' do
+  #  skip
+
+  #  project = 'scss_project'
+  #  filename = 'application.scss'
+
+  #  within_rails_app(project) do |tmpdir|
+  #    asset_output(filename)
+
+  #    new_file = File.join(tmpdir, 'app', 'assets', 'stylesheets', 'globbed', 'new.scss')
+  #    File.open(new_file, 'w') do |file|
+  #      file.puts '.new-file-test { color: #000; }'
+  #    end
+
+  #    css_output = asset_output(filename)
+  #    assert_match /new-file-test/, css_output
+  #  end
+  #end
+
+  #test 'globbed imports work when globbed file is changed' do
+  #  skip
+
+  #  project = 'scss_project'
+  #  filename = 'application.scss'
+
+  #  within_rails_app(project) do |tmpdir|
+  #    asset_output(filename)
+
+  #    new_file = File.join(tmpdir, 'app', 'assets', 'stylesheets', 'globbed', 'globbed.scss')
+  #    File.open(new_file, 'w') do |file|
+  #      file.puts '.changed-file-test { color: #000; }'
+  #    end
+
+  #    css_output = asset_output(filename)
+  #    assert_match /changed-file-test/, css_output
+  #  end
+  #end
 end

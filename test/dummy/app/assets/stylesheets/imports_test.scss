@@ -7,13 +7,13 @@
 @import "partials/without_css_ext";
 @import "css_erb_handler";
 @import "scss_erb_handler";
-// @import "sass_erb_handler";
+@import "sass_erb_handler";
 @import "css_scss_erb_handler";
-// @import "css_sass_erb_handler";
+@import "css_sass_erb_handler";
 
 .main {
   color: yellow;
-  // @include background-from-partial(red);
+  @include background-from-partial(red);
 }
 
 @include without-css-ext;

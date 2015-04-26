@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "minitest", "~> 5.5.1"
   spec.add_development_dependency 'rails'
+  spec.add_development_dependency 'mocha'
 
   # unfortunately we require sass for now, so that we can
   # reuse portions of the sprockets template
@@ -30,7 +31,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'tilt' # For ERB
 
-  spec.add_dependency "sassc", "0.0.10"
+  spec.add_dependency "sassc", "1.0.0"
   spec.add_dependency 'railties'
   spec.add_dependency 'sprockets', '3.0.0.beta.6'
 end
