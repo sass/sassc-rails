@@ -150,6 +150,13 @@ class SassRailsTest < MiniTest::Test
     assert_equal :compressed, Rails.application.config.sass.style
   end
 
+  def test_context_is_being_passed_to_erb_render
+    initialize!
+
+    css_output = render_asset("erb_render_with_context.css.erb")
+    assert_match /@font-face/, css_output
+  end
+
   #test 'sprockets require works correctly' do
   #  skip
 
