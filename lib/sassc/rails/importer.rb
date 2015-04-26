@@ -6,7 +6,7 @@ module SassC
       class Extension
         attr_reader :postfix
 
-        def initialize(postfix)
+        def initialize(postfix=nil)
           @postfix = postfix
         end
 
@@ -26,7 +26,34 @@ module SassC
         end
       end
 
+      class CssScssExtension < Extension
+        def postfix
+          ".css.scss"
+        end
+
+        def import_for(original_path, parent_path, full_path, options)
+          source = File.open(full_path, 'rb') { |f| f.read }
+          SassC::Importer::Import.new(full_path, source: source)
+        end
+      end
+
+      class CssSassExtension < Extension
+        def postfix
+          ".css.sass"
+        end
+
+        def import_for(original_path, parent_path, full_path, options)
+          sass = File.open(full_path, 'rb') { |f| f.read }
+          parsed_scss = SassC::Sass2Scss.convert(sass)
+          SassC::Importer::Import.new(full_path, source: parsed_scss)
+        end
+      end
+
       class SassERBExtension < Extension
+        def postfix
+          ".sass.erb"
+        end
+
         def import_for(original_path, parent_path, full_path, options)
           template = Tilt::ERBTemplate.new(full_path)
           parsed_erb = template.render(options[:sprockets][:context], {})
@@ -48,8 +75,10 @@ module SassC
         Extension.new(".sass"),
         CSSExtension.new,
         ERBExtension.new(".scss.erb"),
-        SassERBExtension.new(".sass.erb"),
         ERBExtension.new(".css.erb"),
+        SassERBExtension.new,
+        CssScssExtension.new,
+        CssSassExtension.new
       ]
 
       PREFIXS = [ "", "_" ]
