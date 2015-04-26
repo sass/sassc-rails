@@ -1,5 +1,4 @@
 require "sprockets/sass_template"
-require "sassc"
 
 module Sprockets
   class SassTemplate
