@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'tilt' # For ERB
 
-  spec.add_dependency "sassc", "1.0.0"
+  spec.add_dependency "sassc", "1.1.0"
   spec.add_dependency 'railties'
   spec.add_dependency 'sprockets', '3.0.0.beta.6'
 end

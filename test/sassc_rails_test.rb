@@ -159,6 +159,11 @@ class SassRailsTest < MiniTest::Test
     assert_match /@font-face/, css_output
   end
 
+  def test_special_characters_compile
+    initialize!
+    css_output = render_asset("special_characters.scss")
+  end
+
   #test 'sprockets require works correctly' do
   #  skip
 
