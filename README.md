@@ -48,5 +48,5 @@ And then execute:
 
 ## Credits
 
-This gem is based on sass-rails [sass-rails](https://github.com/rails/sass-rails), and
+This gem is based on [sass-rails](https://github.com/rails/sass-rails), and
 is maintained by [Ryan Boland](https://ryanboland.com).
