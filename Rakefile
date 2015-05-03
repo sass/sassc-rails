@@ -12,6 +12,7 @@ namespace :tests do
     rails_4_2
     rails_4_1
     rails_4_0
+    with_sass_rails
   ]
 
   gemfiles.each do |gemfile|

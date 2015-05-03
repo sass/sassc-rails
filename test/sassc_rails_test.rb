@@ -166,6 +166,10 @@ class SassRailsTest < MiniTest::Unit::TestCase
     css_output = render_asset("special_characters.scss")
   end
 
+  def test_compression_works
+    skip
+  end
+
   #test 'sprockets require works correctly' do
   #  skip
 
