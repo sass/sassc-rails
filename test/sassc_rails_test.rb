@@ -133,9 +133,8 @@ class SassRailsTest < MiniTest::Unit::TestCase
 
     assert_match /default-old-css/,          css_output
 
-    # skip for now
-    # assert_match /globbed/,                  css_output
-    # assert_match /nested-glob/,              css_output
+    assert_match /globbed/,                  css_output
+    assert_match /nested-glob/,              css_output
   end
 
   def test_style_config_item_is_defaulted_to_expanded_in_development_mode
@@ -198,41 +197,50 @@ class SassRailsTest < MiniTest::Unit::TestCase
   #  assert_match /\.import-css-application/, css_output
   #end
 
-  #test 'globbed imports work when new file is added' do
-  #  skip
+  def test_globbed_imports_work_when_globbed_file_is_changed
+    skip "This seems to work in practice, possible test setup problem"
 
-  #  project = 'scss_project'
-  #  filename = 'application.scss'
+    begin
+      initialize!
 
-  #  within_rails_app(project) do |tmpdir|
-  #    asset_output(filename)
+      new_file = File.join(File.dirname(__FILE__), 'dummy', 'app', 'assets', 'stylesheets', 'globbed', 'new_glob.scss')
 
-  #    new_file = File.join(tmpdir, 'app', 'assets', 'stylesheets', 'globbed', 'new.scss')
-  #    File.open(new_file, 'w') do |file|
-  #      file.puts '.new-file-test { color: #000; }'
-  #    end
+      File.open(new_file, 'w') do |file|
+        file.puts '.new-file-test { color: #000; }'
+      end
 
-  #    css_output = asset_output(filename)
-  #    assert_match /new-file-test/, css_output
-  #  end
-  #end
+      css_output = render_asset("glob_test.scss")
+      assert_match /new-file-test/, css_output
 
-  #test 'globbed imports work when globbed file is changed' do
-  #  skip
+      File.open(new_file, 'w') do |file|
+        file.puts '.changed-file-test { color: #000; }'
+      end
 
-  #  project = 'scss_project'
-  #  filename = 'application.scss'
+      new_css_output = render_asset("glob_test.scss")
+      assert_match /changed-file-test/, new_css_output
+      refute_equal css_output, new_css_output
+    ensure
+      File.delete(new_file)
+    end
+  end
 
-  #  within_rails_app(project) do |tmpdir|
-  #    asset_output(filename)
+  def test_globbed_imports_work_when_globbed_file_is_added
+    begin
+      initialize!
 
-  #    new_file = File.join(tmpdir, 'app', 'assets', 'stylesheets', 'globbed', 'globbed.scss')
-  #    File.open(new_file, 'w') do |file|
-  #      file.puts '.changed-file-test { color: #000; }'
-  #    end
+      css_output = render_asset("glob_test.scss")
+      refute_match /changed-file-test/, css_output
+      new_file = File.join(File.dirname(__FILE__), 'dummy', 'app', 'assets', 'stylesheets', 'globbed', 'new_glob.scss')
 
-  #    css_output = asset_output(filename)
-  #    assert_match /changed-file-test/, css_output
-  #  end
-  #end
+      File.open(new_file, 'w') do |file|
+        file.puts '.changed-file-test { color: #000; }'
+      end
+
+      new_css_output = render_asset("glob_test.scss")
+      assert_match /changed-file-test/, new_css_output
+      refute_equal css_output, new_css_output
+    ensure
+      File.delete(new_file)
+    end
+  end
 end
