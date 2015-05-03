@@ -13,6 +13,7 @@ module SassC::Rails
           syntax: self.class.syntax,
           load_paths: input[:environment].paths,
           importer: SassC::Rails::Importer,
+          style: sass_style,
           sprockets: {
             context: context,
             environment: input[:environment],
@@ -43,6 +44,7 @@ module SassC::Rails
           syntax: syntax,
           load_paths: context.environment.paths,
           importer: SassC::Rails::Importer,
+          style: sass_style,
           sprockets: {
             context: context,
             environment: context.environment
@@ -57,6 +59,11 @@ module SassC::Rails
       include Sprockets3
     else
       include Sprockets2
+    end
+
+    def sass_style
+      style = Rails.application.config.sass.style || :expanded
+      "sass_style_#{style}".to_sym
     end
   end
 

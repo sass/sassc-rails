@@ -30,6 +30,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
   end
 
   def initialize!
+    Rails.env = "test"
     @app.initialize!
   end
 
@@ -44,13 +45,14 @@ class SassRailsTest < MiniTest::Unit::TestCase
   end
 
   def test_setup_works
-    initialize!
+    initialize_dev!
 
     asset = render_asset("application.scss")
 
     assert_equal <<-CSS, asset
 .hello {
-  color: #FFF; }
+  color: #FFF;
+}
     CSS
   end
 
@@ -166,7 +168,12 @@ class SassRailsTest < MiniTest::Unit::TestCase
   end
 
   def test_compression_works
-    skip
+    initialize_prod!
+
+    asset = render_asset("application.scss")
+    assert_equal <<-CSS, asset
+.hello{color:#FFF}
+    CSS
   end
 
   #test 'sprockets require works correctly' do
