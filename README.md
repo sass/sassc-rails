@@ -22,7 +22,7 @@ In one larger project, this made compilation 4x faster:
 
 This should essentially be a drop in alternative to [sass-rails](https://github.com/rails/sass-rails).
 
-*Note:  This is a new project, please report any issues you come across!*
+__Note:  This is a new project, please report any issues you come across!__
 
 ## Installation
 
@@ -45,3 +45,8 @@ And then execute:
 1. Add Tests
 1. Push to the branch (`git push origin my-new-feature`)
 1. Create a new Pull Request
+
+## Credits
+
+This gem is based on sass-rails [sass-rails](https://github.com/rails/sass-rails), and
+is maintained by [Ryan Boland](https://ryanboland.com).
