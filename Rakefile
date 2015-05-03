@@ -9,6 +9,9 @@ namespace :tests do
   gemfiles = %w[
     sprockets_2_12
     sprockets_3_0
+    rails_4_2
+    rails_4_1
+    rails_4_0
   ]
 
   gemfiles.each do |gemfile|

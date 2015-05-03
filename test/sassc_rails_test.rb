@@ -1,9 +1,11 @@
 require "test_helper"
 
-class SassRailsTest < MiniTest::Test
+class SassRailsTest < MiniTest::Unit::TestCase
   attr_reader :app
 
   def setup
+    Rails.application = nil
+
     @app = Class.new(Rails::Application)
     @app.config.active_support.deprecation = :log
     @app.config.eager_load = false

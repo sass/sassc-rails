@@ -21,7 +21,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry'
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "minitest", "~> 5.5.1"
   spec.add_development_dependency 'mocha'
 
   # unfortunately we require sass for now, so that we can
@@ -31,6 +30,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "tilt"
 
-  spec.add_dependency 'rails', '> 4.0.0'
+  spec.add_dependency 'rails', '>= 4.0.0'
   spec.add_dependency 'sprockets', '> 2.11'
 end
