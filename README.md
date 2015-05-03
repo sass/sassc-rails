@@ -22,7 +22,7 @@ In one larger project, this made compilation 4x faster:
 
 This should essentially be a drop in alternative to [sass-rails](https://github.com/rails/sass-rails).
 
-_Note:  This is a new project, please report any issues you come across!_
+*Note:  This is a new project, please report any issues you come across!*
 
 ## Installation
 
