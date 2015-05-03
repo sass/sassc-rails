@@ -1,10 +1,17 @@
 language: ruby
 
 bundler_args: "--binstubs --standalone --without documentation --path ../bundle"
+
 script: "bundle exec rake test"
+
+gemfile:
+  - gemfiles/sprockets_2_12.gemfile
+  - gemfiles/sprockets_3_0.gemfile
+
 rvm:
   - 2.0.0
   - 2.1.5
   - 2.2.0
+
 notifications:
   email: false
