@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
-# for working locally
-# gem "sassc", :path => "../sassc"
+gem "rails", "~> 4.1.0"
 
 # Specify your gem's dependencies in sassc-rails.gemspec
-gemspec
+gemspec path: "../"

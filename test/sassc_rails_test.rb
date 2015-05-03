@@ -1,9 +1,11 @@
 require "test_helper"
 
-class SassRailsTest < MiniTest::Test
+class SassRailsTest < MiniTest::Unit::TestCase
   attr_reader :app
 
   def setup
+    Rails.application = nil
+
     @app = Class.new(Rails::Application)
     @app.config.active_support.deprecation = :log
     @app.config.eager_load = false
@@ -162,6 +164,10 @@ class SassRailsTest < MiniTest::Test
   def test_special_characters_compile
     initialize!
     css_output = render_asset("special_characters.scss")
+  end
+
+  def test_compression_works
+    skip
   end
 
   #test 'sprockets require works correctly' do

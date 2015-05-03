@@ -24,6 +24,12 @@ module SassC::Rails
     # Remove the sass middleware if it gets inadvertently enabled by applications.
     config.after_initialize do |app|
       app.config.middleware.delete(Sass::Plugin::Rack) if defined?(Sass::Plugin::Rack)
+
+      if app.assets
+        # do this after initialize so sass-rails doesn't interfere with us
+        app.assets.register_engine '.sass', SassC::Rails::SassTemplate
+        app.assets.register_engine '.scss', SassC::Rails::ScssTemplate
+      end
     end
 
     initializer :setup_sass, group: :all do |app|
@@ -42,9 +48,6 @@ module SassC::Rails
       # end
 
       if app.assets
-        app.assets.register_engine '.sass', SassC::Rails::SassTemplate
-        app.assets.register_engine '.scss', SassC::Rails::ScssTemplate
-
         app.assets.context_class.class_eval do
           class_attribute :sass_config
           self.sass_config = app.config.sass
