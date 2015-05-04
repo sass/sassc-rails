@@ -32,16 +32,26 @@ class SassRailsTest < MiniTest::Unit::TestCase
   def initialize!
     Rails.env = "test"
     @app.initialize!
+    handle_sass_rails
   end
 
   def initialize_dev!
     Rails.env = "development"
     @app.initialize!
+    handle_sass_rails
   end
 
   def initialize_prod!
     Rails.env = "production"
     @app.initialize!
+    handle_sass_rails
+  end
+
+  def handle_sass_rails
+    if defined?(Sass::Rails)
+      Rails.application.assets.register_engine '.sass', SassC::Rails::SassTemplate
+      Rails.application.assets.register_engine '.scss', SassC::Rails::ScssTemplate
+    end
   end
 
   def test_setup_works
