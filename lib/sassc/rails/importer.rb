@@ -116,8 +116,7 @@ module SassC
           end
         end
 
-        # TODO: Raise an error from SassC here
-        raise ArgumentError.new("file not found: #{path}")
+        SassC::Importer::Import.new(path)
       end
 
       private
