@@ -1,6 +1,7 @@
 @import "partials/css_sass_import";
 @import "partials/sass_import";
 @import "partials/scss_import";
+@import "partials/explicit_extension_import.foo";
 @import "globbed/**/*";
 @import "subfolder/plain";
 @import "subfolder/second_level";

@@ -126,6 +126,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
     assert_match /top-level/,                css_output
     assert_match /partial-sass/,             css_output
     assert_match /partial-scss/,             css_output
+    assert_match /partial-foo/,              css_output
     assert_match /sub-folder-relative-sass/, css_output
     assert_match /sub-folder-relative-scss/, css_output
     assert_match /not-a-partial/,            css_output
