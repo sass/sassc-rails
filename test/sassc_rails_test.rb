@@ -183,7 +183,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
 
     asset = render_asset("application.scss")
     assert_equal <<-CSS, asset
-.hello{color:#FFF}
+.hello{color:#fff}
     CSS
   end
 
