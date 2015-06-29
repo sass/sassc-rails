@@ -74,4 +74,4 @@ for a workaround.
 ## Credits
 
 This gem is based on [sass-rails](https://github.com/rails/sass-rails), and
-is maintained by [Ryan Boland](https://ryanboland.com).
+is maintained by [Ryan Boland](https://ryanboland.com) and [awesome contributors](https://github.com/bolandrm/sassc-rails/graphs/contributors).
