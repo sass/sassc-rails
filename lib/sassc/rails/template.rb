@@ -10,6 +10,7 @@ module SassC::Rails
 
         options = {
           filename: input[:filename],
+          line_comments: line_comments?,
           syntax: self.class.syntax,
           load_paths: input[:environment].paths,
           importer: SassC::Rails::Importer,
@@ -40,6 +41,7 @@ module SassC::Rails
       def evaluate(context, locals, &block)
         options = {
           filename: eval_file,
+          line_comments: line_comments?,
           syntax: syntax,
           load_paths: context.environment.paths,
           importer: SassC::Rails::Importer,
@@ -76,6 +78,10 @@ module SassC::Rails
 
     def sass_style
       (Rails.application.config.sass.style || :expanded).to_sym
+    end
+
+    def line_comments?
+      Rails.application.config.sass.line_comments
     end
   end
 
