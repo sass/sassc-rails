@@ -2,7 +2,7 @@
 
 We all love working with Sass, but compilation can take quite a long time for larger
 codebases.  This gem integrates the C implementation of Sass,
-[libsass](https://github.com/sass/libsass), into the asset pipeline.
+[LibSass](https://github.com/sass/libsass), into the asset pipeline.
 
 In one larger project, this made compilation 4x faster:
 
@@ -25,9 +25,9 @@ This should essentially be a drop in alternative to [sass-rails](https://github.
 __Note:  This is a new project, please report any issues you come across!__
 
 
-## Libsass Compatibility With Ruby Sass
+## LibSass Compatibility With Ruby Sass
 
-For a look at the compatibility between Ruby Sass and Libsass, check this
+For a look at the compatibility between Ruby Sass and LibSass, check this
 [compatibility chart](http://sass-compatibility.github.io/) out.
 
 
@@ -46,7 +46,7 @@ And then execute:
 
 ## Deployment to Heroku
 
-Due to Libsass compilation requirements, you upgrade to the
+Due to LibSass compilation requirements, you must upgrade to the
 [Heroku Cedar-14 Stack](https://devcenter.heroku.com/articles/cedar-14-migration)
 in order to successfully install this gem.
 

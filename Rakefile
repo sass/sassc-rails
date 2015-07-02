@@ -16,19 +16,17 @@ namespace :tests do
   ]
 
   gemfiles.each do |gemfile|
-    desc "Run Tests against #{gemfile}"
+    desc "Run tests against #{gemfile}"
     task gemfile do
-      sh "BUNDLE_GEMFILE='gemfiles/#{gemfile}.gemfile' bundle --quiet"
+      sh "BUNDLE_GEMFILE='gemfiles/#{gemfile}.gemfile' bundle install"
       sh "BUNDLE_GEMFILE='gemfiles/#{gemfile}.gemfile' bundle exec rake test"
     end
   end
 
-  desc "Run Tests against all ORMs"
+  desc "Run tests against all common asset pipeline setups"
   task :all do
     gemfiles.each do |gemfile|
-      puts "Running Tests against #{gemfile}"
-      sh "BUNDLE_GEMFILE='gemfiles/#{gemfile}.gemfile' bundle --quiet"
-      sh "BUNDLE_GEMFILE='gemfiles/#{gemfile}.gemfile' bundle exec rake test"
+      Rake::Task["tests:#{gemfile}"].invoke
     end
   end
 end
