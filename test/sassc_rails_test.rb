@@ -204,6 +204,23 @@ class SassRailsTest < MiniTest::Unit::TestCase
     CSS
   end
 
+  def test_compression_works
+    initialize_prod!
+
+    asset = render_asset("application.scss")
+    assert_equal <<-CSS, asset
+.hello{color:#FFF}
+    CSS
+  end
+
+  def test_sassc_compression_is_used
+    initialize_prod!
+
+    engine = stub(render: "")
+    SassC::Engine.expects(:new).returns(engine)
+    SassC::Engine.expects(:new).with("", {style: :compressed}).returns(engine)
+    render_asset("application.scss")
+  end
   #test 'sprockets require works correctly' do
   #  skip
 
