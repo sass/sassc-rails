@@ -155,15 +155,10 @@ class SassRailsTest < MiniTest::Unit::TestCase
     assert_equal :expanded, Rails.application.config.sass.style
   end
 
-  def test_style_config_item_is_honored_in_development_mode
+  def test_style_config_item_is_honored
     @app.config.sass.style = :nested
-    initialize_dev!
+    initialize!
     assert_equal :nested, Rails.application.config.sass.style
-  end
-
-  def test_style_config_item_is_not_honored_if_environment_is_not_development
-    initialize_prod!
-    assert_equal :compressed, Rails.application.config.sass.style
   end
 
   def test_context_is_being_passed_to_erb_render
@@ -178,15 +173,54 @@ class SassRailsTest < MiniTest::Unit::TestCase
     css_output = render_asset("special_characters.scss")
   end
 
+  def css_compressor_config_item_is_not_honored_in_development_mode
+    @app.config.assets.css_compressor = :test
+    initialize_dev!
+    assert_equal nil, Rails.application.config.assets.css_compressor
+  end
+
+  def css_compressor_config_item_is_honored_if_not_development_mode
+    @app.config.assets.css_compressor = :test
+    initialize_prod!
+    assert_equal :test, Rails.application.config.assets.css_compressor
+  end
+
+  def css_compressor_is_defined_in_test_mode
+    initialize_test!
+    assert_equal :sass, Rails.application.config.assets.css_compressor
+  end
+
+  def css_compressor_is_defined_in_prod_mode
+    initialize_prod!
+    assert_equal :sass, Rails.application.config.assets.css_compressor
+  end
+
   def test_compression_works
     initialize_prod!
 
     asset = render_asset("application.scss")
     assert_equal <<-CSS, asset
-.hello{color:#fff}
+.hello{color:#FFF}
     CSS
   end
 
+  def test_compression_works
+    initialize_prod!
+
+    asset = render_asset("application.scss")
+    assert_equal <<-CSS, asset
+.hello{color:#FFF}
+    CSS
+  end
+
+  def test_sassc_compression_is_used
+    initialize_prod!
+
+    engine = stub(render: "")
+    SassC::Engine.expects(:new).returns(engine)
+    SassC::Engine.expects(:new).with("", {style: :compressed}).returns(engine)
+    render_asset("application.scss")
+  end
   #test 'sprockets require works correctly' do
   #  skip
 
