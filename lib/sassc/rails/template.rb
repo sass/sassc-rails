@@ -62,8 +62,7 @@ module SassC::Rails
     end
 
     def sass_style
-      style = Rails.application.config.sass.style || :expanded
-      "sass_style_#{style}".to_sym
+      (Rails.application.config.sass.style || :expanded).to_sym
     end
   end
 
