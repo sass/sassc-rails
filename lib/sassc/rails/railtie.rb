@@ -56,7 +56,7 @@ module SassC::Rails
       app.config.assets.css_compressor = nil
 
       if !Rails.env.development?
-        app.config.sass.style = :compressed
+        app.config.assets.css_compressor ||= :sass
       else
         # Use expanded output instead of the sass default of :nested unless specified
         app.config.sass.style ||= :expanded
