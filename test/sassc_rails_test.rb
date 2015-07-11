@@ -221,6 +221,16 @@ class SassRailsTest < MiniTest::Unit::TestCase
     SassC::Engine.expects(:new).with("", {style: :compressed}).returns(engine)
     render_asset("application.scss")
   end
+
+  def test_allows_for_inclusion_of_inline_source_maps
+    @app.config.sass.inline_source_maps = true
+    initialize!
+
+    asset = render_asset("application.scss")
+    assert_match /.hello{color:#fff}/, asset
+    assert_match /sourceMappingURL/, asset
+  end
+
   #test 'sprockets require works correctly' do
   #  skip
 

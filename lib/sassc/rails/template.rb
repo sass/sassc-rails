@@ -13,13 +13,12 @@ module SassC::Rails
           syntax: self.class.syntax,
           load_paths: input[:environment].paths,
           importer: SassC::Rails::Importer,
-          style: sass_style,
           sprockets: {
             context: context,
             environment: input[:environment],
             dependencies: context.metadata[:dependency_paths]
           }
-        }
+        }.merge(config_options)
 
         engine = ::SassC::Engine.new(input[:data], options)
 
@@ -44,12 +43,11 @@ module SassC::Rails
           syntax: syntax,
           load_paths: context.environment.paths,
           importer: SassC::Rails::Importer,
-          style: sass_style,
           sprockets: {
             context: context,
             environment: context.environment
           }
-        }
+        }.merge(config_options)
 
         ::SassC::Engine.new(data, options).render
       end
@@ -59,6 +57,21 @@ module SassC::Rails
       include Sprockets3
     else
       include Sprockets2
+    end
+
+    def config_options
+      opts = { style: sass_style }
+
+
+      if Rails.application.config.sass.inline_source_maps
+        opts.merge!({
+          source_map_file: ".",
+          source_map_embed: true,
+          source_map_contents: true,
+        })
+      end
+
+      opts
     end
 
     def sass_style
