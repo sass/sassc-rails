@@ -24,6 +24,19 @@ This should essentially be a drop in alternative to [sass-rails](https://github.
 
 __Note:  This is a new project, please report any issues you come across!__
 
+## Inline Source Maps
+
+With SassC-Rails, it's also extremely easy to turn on inline source maps. Simply
+add the following configuration to your development.rb file:
+
+```ruby
+  # config/environments/development.rb
+  config.sass.inline_source_maps = true
+```
+
+Note, as indicated, these source maps are *inline*.  They will not generate additional
+files or anything like that.  Instead, they will be appended to the compiled
+application.css file.
 
 ## LibSass Compatibility With Ruby Sass
 
