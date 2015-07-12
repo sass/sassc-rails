@@ -34,6 +34,9 @@ add the following configuration to your development.rb file:
 config.sass.inline_source_maps = true
 ```
 
+After adding this config line, you may need to clear your assets cache
+(`rm -r tmp/cache/assets`), stop spring, and restart your rails server.
+
 Note, as indicated, these source maps are *inline*.  They will not generate additional
 files or anything like that.  Instead, they will be appended to the compiled
 application.css file.
