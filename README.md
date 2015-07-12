@@ -56,8 +56,9 @@ And then execute:
 
     $ bundle
 
+## Common Issues
 
-## Deployment to Heroku
+### Deployment to Heroku
 
 Due to LibSass compilation requirements, you must upgrade to the
 [Heroku Cedar-14 Stack](https://devcenter.heroku.com/articles/cedar-14-migration)
@@ -66,13 +67,19 @@ in order to successfully install this gem.
 Upgrading to Cedar-14 is usually a painless process.
 
 
-## Installing alongside a gem that depends on Sass-Rails
+### Installing alongside a gem that depends on Sass-Rails
 
 Libraries explicitly depending on Sass-Rails, such as ActiveAdmin, can cause
 conflicts with installation of SassC-Rails.  While we have no built-in solution
 for this, please check out [this issue](https://github.com/bolandrm/sassc-rails/issues/6)
 for a workaround.
 
+## Changelog
+
+- **1.0.0**
+  - Initial Release
+  - Add support for inline source maps
+  - Support compression in the way that Sass-Rails handles it
 
 ## Contributing
 
