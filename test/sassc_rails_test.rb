@@ -224,10 +224,10 @@ class SassRailsTest < MiniTest::Unit::TestCase
 
   def test_allows_for_inclusion_of_inline_source_maps
     @app.config.sass.inline_source_maps = true
-    initialize!
+    initialize_dev!
 
     asset = render_asset("application.scss")
-    assert_match /.hello{color:#FFF}/, asset
+    assert_match /.hello/, asset
     assert_match /sourceMappingURL/, asset
   end
 
