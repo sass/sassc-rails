@@ -227,7 +227,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
     initialize!
 
     asset = render_asset("application.scss")
-    assert_match /.hello{color:#fff}/, asset
+    assert_match /.hello{color:#FFF}/, asset
     assert_match /sourceMappingURL/, asset
   end
 
