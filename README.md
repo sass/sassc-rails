@@ -30,8 +30,8 @@ With SassC-Rails, it's also extremely easy to turn on inline source maps. Simply
 add the following configuration to your development.rb file:
 
 ```ruby
-  # config/environments/development.rb
-  config.sass.inline_source_maps = true
+# config/environments/development.rb
+config.sass.inline_source_maps = true
 ```
 
 Note, as indicated, these source maps are *inline*.  They will not generate additional
