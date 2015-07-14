@@ -9,3 +9,6 @@ module Sprockets
 end
 
 ::SassC::Script::Functions.send :include, Sprockets::SassFunctions
+
+::Sass::Script::Value::String.send :include, SassC::Script::NativeString
+::Sass::Script::Value::Color.send :include, SassC::Script::NativeColor
