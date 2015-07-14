@@ -13,8 +13,8 @@ gemfile:
 
 rvm:
   - 2.0.0
-  - 2.1.5
-  - 2.2.0
+  - 2.1.6
+  - 2.2.2
 
 notifications:
   email: false
