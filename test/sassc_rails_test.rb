@@ -13,6 +13,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
     @app.config.log_level = :debug
 
     # reset config back to default
+    @app.config.assets.css_compressor = nil
     @app.config.sass = ActiveSupport::OrderedOptions.new
     @app.config.sass.preferred_syntax = :scss
     @app.config.sass.load_paths       = []
