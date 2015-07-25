@@ -11,6 +11,9 @@ module SassC::Rails
     # Initialize the load paths to an empty array
     config.sass.load_paths       = []
 
+    # Display line comments above each selector as a debugging aid
+    config.sass.line_comments    = true
+
     # Set the default stylesheet engine
     # It can be overridden by passing:
     #     --stylesheet_engine=sass
@@ -35,7 +38,7 @@ module SassC::Rails
       # Override stylesheet engine to the preferred syntax
       config.app_generators.stylesheet_engine syntax
 
-      # Establish configuration defaults that are evironmental in nature
+      # Establish configuration defaults that are environmental in nature
       # if config.sass.full_exception.nil?
       #   # Display a stack trace in the css output when in development-like environments.
       #   config.sass.full_exception = app.config.consider_all_requests_local
