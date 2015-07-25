@@ -35,7 +35,8 @@ config.sass.inline_source_maps = true
 ```
 
 After adding this config line, you may need to clear your assets cache
-(`rm -r tmp/cache/assets`), stop spring, and restart your rails server.
+(`rm -r tmp/cache/assets`), stop spring, and restart your rails server.  You may
+also wish to disable line comments (`config.sass.line_comments = false`).
 
 Note, as indicated, these source maps are *inline*.  They will not generate additional
 files or anything like that.  Instead, they will be appended to the compiled
@@ -79,6 +80,8 @@ for a workaround.
 
 ## Changelog
 
+- **1.1.0** (unreleased)
+  - [Source line comments](https://github.com/bolandrm/sassc-rails/pull/24) (`app.config.sass.line_comments`)
 - **1.0.0**
   - Initial Release
   - Add support for inline source maps
