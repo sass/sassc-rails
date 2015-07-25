@@ -1,6 +1,6 @@
 begin
   require "sass-rails"
-  Sass::Rails.send(:remove_const, :Railtie)
+  Rails::Railtie.subclasses.delete Sass::Rails::Railtie
 rescue LoadError
 end
 
