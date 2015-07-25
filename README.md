@@ -82,6 +82,7 @@ for a workaround.
 
 - **1.1.0** (unreleased)
   - [Source line comments](https://github.com/bolandrm/sassc-rails/pull/24) (`app.config.sass.line_comments`)
+  - [Prevent sass-rails railtie from running](https://github.com/bolandrm/sassc-rails/pull/34)
 - **1.0.0**
   - Initial Release
   - Add support for inline source maps
