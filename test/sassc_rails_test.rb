@@ -13,13 +13,16 @@ class SassRailsTest < MiniTest::Unit::TestCase
     @app.config.log_level = :debug
 
     # reset config back to default
-    @app.config.assets.css_compressor = nil
+    @app.config.assets.delete(:css_compressor)
     @app.config.sass = ActiveSupport::OrderedOptions.new
     @app.config.sass.preferred_syntax = :scss
     @app.config.sass.load_paths       = []
 
     # Not actually a default, but it makes assertions more complicated
     @app.config.sass.line_comments    = false
+
+    # Add a fake compressor for testing purposes
+    @app.assets.register_compressor "text/css", :test, TestCompressor
 
     Rails.backtrace_cleaner.remove_silencers!
   end
@@ -186,24 +189,24 @@ class SassRailsTest < MiniTest::Unit::TestCase
     css_output = render_asset("special_characters.scss")
   end
 
-  def css_compressor_config_item_is_not_honored_in_development_mode
-    @app.config.assets.css_compressor = :test
-    initialize_dev!
-    assert_equal nil, Rails.application.config.assets.css_compressor
-  end
-
-  def css_compressor_config_item_is_honored_if_not_development_mode
+  def test_css_compressor_config_item_is_honored_if_not_development_mode
     @app.config.assets.css_compressor = :test
     initialize_prod!
     assert_equal :test, Rails.application.config.assets.css_compressor
   end
 
-  def css_compressor_is_defined_in_test_mode
-    initialize_test!
+  def test_css_compressor_config_item_may_be_nil_in_test_mode
+    @app.config.assets.css_compressor = nil
+    initialize!
+    assert_equal nil, Rails.application.config.assets.css_compressor
+  end
+
+  def test_css_compressor_is_defined_in_test_mode
+    initialize!
     assert_equal :sass, Rails.application.config.assets.css_compressor
   end
 
-  def css_compressor_is_defined_in_prod_mode
+  def test_css_compressor_is_defined_in_prod_mode
     initialize_prod!
     assert_equal :sass, Rails.application.config.assets.css_compressor
   end
@@ -318,4 +321,6 @@ class SassRailsTest < MiniTest::Unit::TestCase
       File.delete(new_file)
     end
   end
+
+  class TestCompressor; end
 end
