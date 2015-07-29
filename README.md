@@ -1,4 +1,4 @@
-# SassC::Rails [![Build Status](https://travis-ci.org/bolandrm/sassc-rails.svg)](https://travis-ci.org/bolandrm/sassc-rails) [![Gem Version](https://badge.fury.io/rb/sassc-rails.svg)](http://badge.fury.io/rb/sassc-rails)
+# SassC::Rails [![Build Status](https://travis-ci.org/sass/sassc-rails.svg)](https://travis-ci.org/sass/sassc-rails) [![Gem Version](https://badge.fury.io/rb/sassc-rails.svg)](http://badge.fury.io/rb/sassc-rails)
 
 We all love working with Sass, but compilation can take quite a long time for larger
 codebases.  This gem integrates the C implementation of Sass,
