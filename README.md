@@ -78,9 +78,17 @@ conflicts with installation of SassC-Rails.  While we have no built-in solution
 for this, please check out [this issue](https://github.com/bolandrm/sassc-rails/issues/6)
 for a workaround.
 
+
+## Credits
+
+This gem is based on [sass-rails](https://github.com/rails/sass-rails), and
+is maintained by [Ryan Boland](https://ryanboland.com) and [awesome contributors](https://github.com/bolandrm/sassc-rails/graphs/contributors).
+
+
 ## Changelog
 
-- **1.1.0** (unreleased)
+- **1.1.0**
+  - Moved under the official sass organization!
   - [Source line comments](https://github.com/bolandrm/sassc-rails/pull/24) (`app.config.sass.line_comments`)
   - [Prevent sass-rails railtie from running](https://github.com/bolandrm/sassc-rails/pull/34)
   - [CSS compression may be disabled in test mode](https://github.com/bolandrm/sassc-rails/issues/33). Special thanks to [this Sass-Rails PR](https://github.com/rails/sass-rails/pull/338) for inspiration.
@@ -88,6 +96,7 @@ for a workaround.
   - Initial Release
   - Add support for inline source maps
   - Support compression in the way that Sass-Rails handles it
+
 
 ## Contributing
 
@@ -97,9 +106,3 @@ for a workaround.
 1. Add Tests
 1. Push to the branch (`git push origin my-new-feature`)
 1. Create a new Pull Request
-
-
-## Credits
-
-This gem is based on [sass-rails](https://github.com/rails/sass-rails), and
-is maintained by [Ryan Boland](https://ryanboland.com) and [awesome contributors](https://github.com/bolandrm/sassc-rails/graphs/contributors).

@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = "sassc-rails"
   spec.version       = SassC::Rails::VERSION
   spec.authors       = ["Ryan Boland"]
-  spec.email         = ["bolandryanm@gmail.com"]
+  spec.email         = ["ryan@tanookilabs.com"]
   spec.summary       = %q{Integrate SassC-Ruby into Rails.}
   spec.description   = %q{Integrate SassC-Ruby into Rails.}
-  spec.homepage      = "https://github.com/bolandrm/sassc-rails"
+  spec.homepage      = "https://github.com/sass/sassc-rails"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   # Unfortunately we require sass for now, so that we can
   # reuse portions of the Sprockets template
   spec.add_dependency 'sass'
-  spec.add_dependency "sassc", "~> 1.5"
+  spec.add_dependency "sassc", "~> 1.6"
 
   spec.add_dependency "tilt"
 
