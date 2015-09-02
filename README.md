@@ -100,7 +100,7 @@ is maintained by [Ryan Boland](https://ryanboland.com) and [awesome contributors
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/sassc-rails/fork )
+1. Fork it ( https://github.com/sass/sassc-rails/fork )
 1. Create your feature branch (`git checkout -b my-new-feature`)
 1. Commit your changes (`git commit -am 'Add some feature'`)
 1. Add Tests
