@@ -324,5 +324,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
     end
   end
 
-  class TestCompressor; end
+  class TestCompressor
+    def self.call(*); end
+  end
 end
