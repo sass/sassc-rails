@@ -232,11 +232,12 @@ class SassRailsTest < MiniTest::Unit::TestCase
   end
 
   def test_sassc_compression_is_used
-    initialize_prod!
-
     engine = stub(render: "")
     SassC::Engine.expects(:new).returns(engine)
     SassC::Engine.expects(:new).with("", {style: :compressed}).returns(engine)
+
+    initialize_prod!
+
     render_asset("application.scss")
   end
 
