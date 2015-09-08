@@ -44,14 +44,14 @@ module SassC::Rails
       #   config.sass.full_exception = app.config.consider_all_requests_local
       # end
 
-      if app.assets
-        app.assets.context_class.class_eval do
+      app.config.assets.configure do |env|
+        env.context_class.class_eval do
           class_attribute :sass_config
           self.sass_config = app.config.sass
         end
 
-        app.assets.register_engine '.sass', SassC::Rails::SassTemplate
-        app.assets.register_engine '.scss', SassC::Rails::ScssTemplate
+        env.register_engine '.sass', SassC::Rails::SassTemplate
+        env.register_engine '.scss', SassC::Rails::ScssTemplate
       end
     end
 

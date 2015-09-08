@@ -22,7 +22,9 @@ class SassRailsTest < MiniTest::Unit::TestCase
     @app.config.sass.line_comments    = false
 
     # Add a fake compressor for testing purposes
-    @app.assets.register_compressor "text/css", :test, TestCompressor
+    @app.config.assets.configure do |env|
+      env.register_compressor "text/css", :test, TestCompressor
+    end
 
     Rails.backtrace_cleaner.remove_silencers!
   end
