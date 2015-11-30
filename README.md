@@ -75,23 +75,23 @@ Upgrading to Cedar-14 is usually a painless process.
 
 Libraries explicitly depending on Sass-Rails, such as ActiveAdmin, can cause
 conflicts with installation of SassC-Rails.  While we have no built-in solution
-for this, please check out [this issue](https://github.com/bolandrm/sassc-rails/issues/6)
+for this, please check out [this issue](https://github.com/sass/sassc-rails/issues/6)
 for a workaround.
 
 
 ## Credits
 
 This gem is based on [sass-rails](https://github.com/rails/sass-rails), and
-is maintained by [Ryan Boland](https://ryanboland.com) and [awesome contributors](https://github.com/bolandrm/sassc-rails/graphs/contributors).
+is maintained by [Ryan Boland](https://ryanboland.com) and [awesome contributors](https://github.com/sass/sassc-rails/graphs/contributors).
 
 
 ## Changelog
 
 - **1.1.0**
   - Moved under the official sass organization!
-  - [Source line comments](https://github.com/bolandrm/sassc-rails/pull/24) (`app.config.sass.line_comments`)
-  - [Prevent sass-rails railtie from running](https://github.com/bolandrm/sassc-rails/pull/34)
-  - [CSS compression may be disabled in test mode](https://github.com/bolandrm/sassc-rails/issues/33). Special thanks to [this Sass-Rails PR](https://github.com/rails/sass-rails/pull/338) for inspiration.
+  - [Source line comments](https://github.com/sass/sassc-rails/pull/24) (`app.config.sass.line_comments`)
+  - [Prevent sass-rails railtie from running](https://github.com/sass/sassc-rails/pull/34)
+  - [CSS compression may be disabled in test mode](https://github.com/sass/sassc-rails/issues/33). Special thanks to [this Sass-Rails PR](https://github.com/rails/sass-rails/pull/338) for inspiration.
 - **1.0.0**
   - Initial Release
   - Add support for inline source maps
