@@ -7,6 +7,8 @@ end
 
 namespace :tests do
   gemfiles = %w[
+    sprockets-rails_3_0
+    sprockets-rails_2_3
     sprockets_2_12
     sprockets_3_0
     rails_4_2
