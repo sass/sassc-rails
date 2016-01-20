@@ -22,7 +22,9 @@ class SassRailsTest < MiniTest::Unit::TestCase
     @app.config.sass.line_comments    = false
 
     # Add a fake compressor for testing purposes
-    @app.assets.register_compressor "text/css", :test, TestCompressor
+    @app.config.assets.configure do |env|
+      env.register_compressor "text/css", :test, TestCompressor
+    end
 
     Rails.backtrace_cleaner.remove_silencers!
   end
@@ -230,11 +232,12 @@ class SassRailsTest < MiniTest::Unit::TestCase
   end
 
   def test_sassc_compression_is_used
-    initialize_prod!
-
     engine = stub(render: "")
     SassC::Engine.expects(:new).returns(engine)
     SassC::Engine.expects(:new).with("", {style: :compressed}).returns(engine)
+
+    initialize_prod!
+
     render_asset("application.scss")
   end
 
@@ -322,5 +325,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
     end
   end
 
-  class TestCompressor; end
+  class TestCompressor
+    def self.call(*); end
+  end
 end
