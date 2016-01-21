@@ -55,7 +55,7 @@ module SassC::Rails
       end
     end
 
-    if Sprockets::VERSION > "3.0.0"
+    if Sprockets::VERSION >= "3.0.0"
       include Sprockets3
     else
       include Sprockets2
@@ -86,7 +86,7 @@ module SassC::Rails
   end
 
   class ScssTemplate < SassTemplate
-    unless Sprockets::VERSION > "3.0.0"
+    unless Sprockets::VERSION >= "3.0.0"
       self.default_mime_type = 'text/css'
     end
 
