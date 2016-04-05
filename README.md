@@ -87,6 +87,8 @@ is maintained by [Ryan Boland](https://ryanboland.com) and [awesome contributors
 
 ## Changelog
 
+- **1.2.1**
+  - Bump SassC (and thus LibSass) version
 - **1.2.0**
   - [Support sprockets-rails 3](https://github.com/sass/sassc-rails/pull/41)
   - [Only depend on Railties instead of full Rails](https://github.com/sass/sassc-rails/pull/52)
