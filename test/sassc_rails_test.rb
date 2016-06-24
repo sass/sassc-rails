@@ -116,6 +116,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
   end
 
   def test_sass_imports_work_correctly
+    app.config.sass.load_paths << Rails.root.join('app/assets/stylesheets/in_load_paths')
     initialize!
 
     css_output = render_asset("imports_test.css")
@@ -145,6 +146,8 @@ class SassRailsTest < MiniTest::Unit::TestCase
 
     assert_match /globbed/,                  css_output
     assert_match /nested-glob/,              css_output
+
+    assert_match /partial_in_load_paths/,    css_output
   end
 
   def test_style_config_item_is_defaulted_to_expanded_in_development_mode
