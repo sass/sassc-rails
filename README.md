@@ -62,6 +62,9 @@ And then execute:
 
 ## Common Issues
 
+### Small fix, manual create initiliazer
+Look at [this issue](https://github.com/sass/sassc-rails/issues/68)
+
 ### Deployment to Heroku
 
 Due to LibSass compilation requirements, you must upgrade to the
@@ -75,7 +78,7 @@ Upgrading to Cedar-14 is usually a painless process.
 
 Libraries explicitly depending on Sass-Rails, such as ActiveAdmin, can cause
 conflicts with installation of SassC-Rails.  While we have no built-in solution
-for this, please check out [this issue](https://github.com/sass/sassc-rails/issues/6)
+for this, please check out [this issue](https://github.com/sass/sassc-rails/issues/68)
 for a workaround.
 
 
