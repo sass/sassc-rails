@@ -50,8 +50,15 @@ module SassC::Rails
           self.sass_config = app.config.sass
         end
 
-        env.register_engine '.sass', SassC::Rails::SassTemplate
-        env.register_engine '.scss', SassC::Rails::ScssTemplate
+        if env.respond_to?(:register_transformer)
+          env.register_transformer 'text/sass', 'text/css', SassC::Rails::SassTemplate.new #->() { puts "yoyoyoy" }
+          env.register_transformer 'text/scss', 'text/css', SassC::Rails::ScssTemplate.new #->() { puts "yoyoyoy" }
+        end
+
+        if env.respond_to?(:register_engine)
+          env.register_engine '.sass', SassC::Rails::SassTemplate
+          env.register_engine '.scss', SassC::Rails::ScssTemplate
+        end
       end
     end
 
