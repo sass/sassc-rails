@@ -56,8 +56,8 @@ module SassC::Rails
         end
 
         if env.respond_to?(:register_engine)
-          env.register_engine '.sass', SassC::Rails::SassTemplate
-          env.register_engine '.scss', SassC::Rails::ScssTemplate
+          env.register_engine '.sass', SassC::Rails::SassTemplate, silence_deprecation: true
+          env.register_engine '.scss', SassC::Rails::ScssTemplate, silence_deprecation: true
         end
       end
     end
