@@ -13,6 +13,7 @@
 @import "css_sass_handler";
 @import "css_scss_erb_handler";
 @import "css_sass_erb_handler";
+@import 'partial_in_load_paths';
 
 .main {
   color: yellow;
