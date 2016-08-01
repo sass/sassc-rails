@@ -56,8 +56,13 @@ module SassC::Rails
         end
 
         if env.respond_to?(:register_engine)
-          env.register_engine '.sass', SassC::Rails::SassTemplate
-          env.register_engine '.scss', SassC::Rails::ScssTemplate
+          [
+            ['.sass', SassC::Rails::SassTemplate],
+            ['.scss', SassC::Rails::ScssTemplate]
+          ].each do |engine|
+            engine << { silence_deprecation: true } if Sprockets::VERSION.start_with?("3")
+            env.register_engine(*engine)
+          end
         end
       end
     end
