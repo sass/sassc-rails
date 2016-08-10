@@ -87,6 +87,9 @@ is maintained by [Ryan Boland](https://ryanboland.com) and [awesome contributors
 
 ## Changelog
 
+- **1.3.0**
+  - [Silence Sprockets deprecation warnings](https://github.com/sass/sassc-rails/pull/76)
+  - [Sprockets 4 compatibility](https://github.com/sass/sassc-rails/pull/65)
 - **1.2.1**
   - Bump SassC (and thus LibSass) version
 - **1.2.0**

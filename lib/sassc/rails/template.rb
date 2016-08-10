@@ -1,9 +1,16 @@
 require "sprockets/version"
-require "sprockets/sass_template"
+
+begin
+  require 'sprockets/sass_processor'
+rescue LoadError
+  require "sprockets/sass_template"
+end
+
 require "sprockets/utils"
 
 module SassC::Rails
-  class SassTemplate < Sprockets::SassTemplate
+
+  class SassTemplate < defined?(Sprockets::SassProcessor) ? Sprockets::SassProcessor : Sprockets::SassTemplate
     module Sprockets3
       def call(input)
         context = input[:environment].context_class.new(input)
@@ -19,7 +26,7 @@ module SassC::Rails
             environment: input[:environment],
             dependencies: context.metadata[:dependency_paths]
           }
-        }.merge(config_options)
+        }.merge(config_options) { |*args| safe_merge(*args) }
 
         engine = ::SassC::Engine.new(input[:data], options)
 
@@ -49,7 +56,7 @@ module SassC::Rails
             context: context,
             environment: context.environment
           }
-        }.merge(config_options)
+        }.merge(config_options, &method(:safe_merge))
 
         ::SassC::Engine.new(data, options).render
       end
@@ -62,7 +69,7 @@ module SassC::Rails
     end
 
     def config_options
-      opts = { style: sass_style }
+      opts = { style: sass_style, load_paths: load_paths }
 
 
       if Rails.application.config.sass.inline_source_maps
@@ -80,8 +87,22 @@ module SassC::Rails
       (Rails.application.config.sass.style || :expanded).to_sym
     end
 
+    def load_paths
+      Rails.application.config.sass.load_paths || []
+    end
+
     def line_comments?
       Rails.application.config.sass.line_comments
+    end
+
+    def safe_merge(key, left, right)
+      if [left, right].all? { |v| v.is_a? Hash }
+        left.merge(right) { |*args| safe_merge *args }
+      elsif [left, right].all? { |v| v.is_a? Array }
+        (left + right).uniq
+      else
+        right
+      end
     end
   end
 

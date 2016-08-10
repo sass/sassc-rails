@@ -54,7 +54,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
   def test_setup_works
     initialize_dev!
 
-    asset = render_asset("application.scss")
+    asset = render_asset("application.css")
 
     assert_equal <<-CSS, asset
 .hello {
@@ -67,7 +67,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
     initialize!
 
     assert_raises(SassC::SyntaxError) do
-      render_asset("syntax_error.scss")
+      render_asset("syntax_error.css")
     end
   end
 
@@ -76,7 +76,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
 
     initialize!
 
-    css_output = render_asset("helpers_test.scss")
+    css_output = render_asset("helpers_test.css")
 
     assert_match %r{asset-path:\s*"/assets/rails.png"},                           css_output, 'asset-path:\s*"/assets/rails.png"'
     assert_match %r{asset-url:\s*url\(/assets/rails.png\)},                       css_output, 'asset-url:\s*url\(/assets/rails.png\)'
@@ -87,7 +87,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
   def test_sass_asset_paths_work
     initialize!
 
-    css_output = render_asset("helpers_test.scss")
+    css_output = render_asset("helpers_test.css")
 
     assert_match %r{video-path:\s*"/videos/rails.mp4"},                           css_output, 'video-path:\s*"/videos/rails.mp4"'
     assert_match %r{video-url:\s*url\(/videos/rails.mp4\)},                       css_output, 'video-url:\s*url\(/videos/rails.mp4\)'
@@ -116,9 +116,10 @@ class SassRailsTest < MiniTest::Unit::TestCase
   end
 
   def test_sass_imports_work_correctly
+    app.config.sass.load_paths << Rails.root.join('app/assets/stylesheets/in_load_paths')
     initialize!
 
-    css_output = render_asset("imports_test.scss")
+    css_output = render_asset("imports_test.css")
     assert_match /main/,                     css_output
     assert_match /top-level/,                css_output
     assert_match /partial-sass/,             css_output
@@ -145,6 +146,8 @@ class SassRailsTest < MiniTest::Unit::TestCase
 
     assert_match /globbed/,                  css_output
     assert_match /nested-glob/,              css_output
+
+    assert_match /partial_in_load_paths/,    css_output
   end
 
   def test_style_config_item_is_defaulted_to_expanded_in_development_mode
@@ -162,7 +165,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
     @app.config.sass.line_comments = true
     initialize_dev!
 
-    css_output = render_asset("css_scss_handler.css.scss")
+    css_output = render_asset("css_scss_handler.css")
     assert_match %r{/* line 1}, css_output
     assert_match %r{.+/sassc-rails/test/dummy/app/assets/stylesheets/css_scss_handler.css.scss}, css_output
   end
@@ -176,7 +179,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
 
   def test_special_characters_compile
     initialize!
-    css_output = render_asset("special_characters.scss")
+    css_output = render_asset("special_characters.css")
   end
 
   def test_css_compressor_config_item_is_honored_if_not_development_mode
@@ -204,7 +207,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
   def test_compression_works
     initialize_prod!
 
-    asset = render_asset("application.scss")
+    asset = render_asset("application.css")
     assert_equal <<-CSS, asset
 .hello{color:#FFF}
     CSS
@@ -213,7 +216,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
   def test_compression_works
     initialize_prod!
 
-    asset = render_asset("application.scss")
+    asset = render_asset("application.css")
     assert_equal <<-CSS, asset
 .hello{color:#FFF}
     CSS
@@ -226,14 +229,14 @@ class SassRailsTest < MiniTest::Unit::TestCase
 
     initialize_prod!
 
-    render_asset("application.scss")
+    render_asset("application.css")
   end
 
   def test_allows_for_inclusion_of_inline_source_maps
     @app.config.sass.inline_source_maps = true
     initialize_dev!
 
-    asset = render_asset("application.scss")
+    asset = render_asset("application.css")
     assert_match /.hello/, asset
     assert_match /sourceMappingURL/, asset
   end
@@ -278,14 +281,14 @@ class SassRailsTest < MiniTest::Unit::TestCase
         file.puts '.new-file-test { color: #000; }'
       end
 
-      css_output = render_asset("glob_test.scss")
+      css_output = render_asset("glob_test.css")
       assert_match /new-file-test/, css_output
 
       File.open(new_file, 'w') do |file|
         file.puts '.changed-file-test { color: #000; }'
       end
 
-      new_css_output = render_asset("glob_test.scss")
+      new_css_output = render_asset("glob_test.css")
       assert_match /changed-file-test/, new_css_output
       refute_equal css_output, new_css_output
     ensure
@@ -297,7 +300,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
     begin
       initialize!
 
-      css_output = render_asset("glob_test.scss")
+      css_output = render_asset("glob_test.css")
       refute_match /changed-file-test/, css_output
       new_file = File.join(File.dirname(__FILE__), 'dummy', 'app', 'assets', 'stylesheets', 'globbed', 'new_glob.scss')
 
@@ -305,7 +308,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
         file.puts '.changed-file-test { color: #000; }'
       end
 
-      new_css_output = render_asset("glob_test.scss")
+      new_css_output = render_asset("glob_test.css")
       assert_match /changed-file-test/, new_css_output
       refute_equal css_output, new_css_output
     ensure
