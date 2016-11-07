@@ -51,8 +51,8 @@ module SassC::Rails
         end
 
         if env.respond_to?(:register_transformer)
-          env.register_transformer 'text/sass', 'text/css', SassC::Rails::SassTemplate.new #->() { puts "yoyoyoy" }
-          env.register_transformer 'text/scss', 'text/css', SassC::Rails::ScssTemplate.new #->() { puts "yoyoyoy" }
+          env.register_transformer 'text/sass', 'text/css', SassC::Rails::SassTemplate.new
+          env.register_transformer 'text/scss', 'text/css', SassC::Rails::ScssTemplate.new
         end
 
         if env.respond_to?(:register_engine)
