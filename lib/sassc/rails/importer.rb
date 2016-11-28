@@ -96,7 +96,9 @@ module SassC
           return glob_imports(base, m[2], parent_path)
         end
 
-        search_paths = ([parent_dir] + load_paths).uniq
+        # Compass and other gems us their own special loaders
+        # Hence making this to_s required to have a proper uniq set.
+        search_paths = ([parent_dir] + load_paths).map(&:to_s).uniq
 
         if specified_dir != "."
           search_paths.map! do |path|
