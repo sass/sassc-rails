@@ -21,6 +21,7 @@ module SassC::Rails
           syntax: self.class.syntax,
           load_paths: input[:environment].paths,
           importer: SassC::Rails::Importer,
+          precision: ::Sass::Script::Value::Number.precision,
           sprockets: {
             context: context,
             environment: input[:environment],
@@ -52,6 +53,7 @@ module SassC::Rails
           syntax: syntax,
           load_paths: context.environment.paths,
           importer: SassC::Rails::Importer,
+          precision: ::Sass::Script::Value::Number.precision,
           sprockets: {
             context: context,
             environment: context.environment
