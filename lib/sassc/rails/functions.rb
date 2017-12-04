@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sprockets/sass_functions'
 
 module Sprockets
