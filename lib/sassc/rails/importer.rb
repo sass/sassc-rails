@@ -100,6 +100,9 @@ module SassC
           search_paths.map! do |path|
             File.join(path, specified_dir)
           end
+          search_paths.select! do |path|
+            File.directory?(path)
+          end
         end
 
         search_paths.each do |search_path|
