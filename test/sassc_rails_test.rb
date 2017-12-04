@@ -167,7 +167,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
 
     css_output = render_asset("css_scss_handler.css")
     assert_match %r{/* line 1}, css_output
-    assert_match %r{.+/sassc-rails/test/dummy/app/assets/stylesheets/css_scss_handler.css.scss}, css_output
+    assert_match %r{.+test/dummy/app/assets/stylesheets/css_scss_handler.css.scss}, css_output
   end
 
   def test_context_is_being_passed_to_erb_render
@@ -191,7 +191,7 @@ class SassRailsTest < MiniTest::Unit::TestCase
   def test_css_compressor_config_item_may_be_nil_in_test_mode
     @app.config.assets.css_compressor = nil
     initialize!
-    assert_equal nil, Rails.application.config.assets.css_compressor
+    assert_nil Rails.application.config.assets.css_compressor
   end
 
   def test_css_compressor_is_defined_in_test_mode
