@@ -75,13 +75,13 @@ module SassC
       EXTENSIONS = [
         CssScssExtension.new,
         CssSassExtension.new,
-        Extension.new(".scss"),
-        Extension.new(".sass"),
-        CSSExtension.new,
+        SassERBExtension.new,
         ERBExtension.new(".scss.erb"),
         ERBExtension.new(".css.erb"),
-        SassERBExtension.new
-      ]
+        Extension.new(".scss"),
+        Extension.new(".sass"),
+        CSSExtension.new
+      ].freeze
 
       PREFIXS = [ "", "_" ]
       GLOB = /(\A|\/)(\*|\*\*\/\*)\z/
