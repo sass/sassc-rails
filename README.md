@@ -85,6 +85,9 @@ is maintained by [Ryan Boland](https://ryanboland.com) and [awesome contributors
 
 ## Changelog
 
+- **2.0.0**
+  - [Drop support for Sprockets 2](https://github.com/sass/sassc-rails/pull/109)
+  - [Remove dependency on Ruby Sass](https://github.com/sass/sassc-rails/pull/109)
 - **1.3.0**
   - [Silence Sprockets deprecation warnings](https://github.com/sass/sassc-rails/pull/76)
   - [Sprockets 4 compatibility](https://github.com/sass/sassc-rails/pull/65)
