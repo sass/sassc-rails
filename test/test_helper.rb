@@ -10,7 +10,7 @@ require "fileutils"
 require 'rails'
 require 'bundler/setup'
 require "minitest/autorun"
-require 'mocha/mini_test'
+require 'mocha/minitest'
 
 Bundler.require
 
