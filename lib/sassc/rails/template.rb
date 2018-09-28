@@ -79,6 +79,30 @@ module SassC::Rails
         right
       end
     end
+
+    # The methods in the Functions module were copied here from sprockets in order to
+    # override the Value class names (e.g. ::SassC::Script::Value::String)
+    module Functions
+      def asset_path(path, options = {})
+        path = path.value
+
+        path, _, query, fragment = URI.split(path)[5..8]
+        path     = sprockets_context.asset_path(path, options)
+        query    = "?#{query}" if query
+        fragment = "##{fragment}" if fragment
+
+        ::SassC::Script::Value::String.new("#{path}#{query}#{fragment}", :string)
+      end
+
+      def asset_url(path, options = {})
+        ::SassC::Script::Value::String.new("url(#{asset_path(path, options).value})")
+      end
+
+      def asset_data_url(path)
+        url = sprockets_context.asset_data_uri(path.value)
+        ::SassC::Script::Value::String.new("url(" + url + ")")
+      end
+    end
   end
 
   class ScssTemplate < SassTemplate
