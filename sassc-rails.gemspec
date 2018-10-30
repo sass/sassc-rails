@@ -23,14 +23,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency 'mocha'
 
-  # Unfortunately we require sass for now, so that we can
-  # reuse portions of the Sprockets template
-  spec.add_dependency 'sass'
-  spec.add_dependency "sassc", "~> 1.9"
-
+  spec.add_dependency "sassc", ">= 2.0"
   spec.add_dependency "tilt"
 
   spec.add_dependency 'railties', '>= 4.0.0'
-  spec.add_dependency 'sprockets', '> 2.11'
+  spec.add_dependency 'sprockets', '> 3.0'
   spec.add_dependency 'sprockets-rails'
 end
