@@ -15,6 +15,7 @@ gemfile:
 rvm:
   - 2.4.4
   - 2.5.1
+  - jruby
 
 notifications:
   email: false
