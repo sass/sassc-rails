@@ -113,7 +113,7 @@ module SassC
 
             EXTENSIONS.each do |extension|
               try_path = File.join(search_path, file_name + extension.postfix)
-              if File.exists?(try_path)
+              if File.exist?(try_path)
                 record_import_as_dependency try_path
                 return extension.import_for(try_path, parent_dir, options)
               end
