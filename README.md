@@ -85,6 +85,9 @@ is maintained by [Ryan Boland](https://ryanboland.com) and [awesome contributors
 
 ## Changelog
 
+- **2.1.0**
+  - [JRuby support](https://github.com/sass/sassc-rails/pull/113)
+  - [SCSS / SASS scaffolding](https://github.com/sass/sassc-rails/pull/112)
 - **2.0.0**
   - [Drop support for Sprockets 2](https://github.com/sass/sassc-rails/pull/109)
   - [Remove dependency on Ruby Sass](https://github.com/sass/sassc-rails/pull/109)
