@@ -22,8 +22,6 @@ In one larger project, this made compilation 4x faster:
 
 This should essentially be a drop in alternative to [sass-rails](https://github.com/rails/sass-rails).
 
-__Note:  This is a new project, please report any issues you come across!__
-
 ## Inline Source Maps
 
 With SassC-Rails, it's also extremely easy to turn on inline source maps. Simply
@@ -87,6 +85,12 @@ is maintained by [Ryan Boland](https://ryanboland.com) and [awesome contributors
 
 ## Changelog
 
+- **2.1.0**
+  - [JRuby support](https://github.com/sass/sassc-rails/pull/113)
+  - [SCSS / SASS scaffolding](https://github.com/sass/sassc-rails/pull/112)
+- **2.0.0**
+  - [Drop support for Sprockets 2](https://github.com/sass/sassc-rails/pull/109)
+  - [Remove dependency on Ruby Sass](https://github.com/sass/sassc-rails/pull/109)
 - **1.3.0**
   - [Silence Sprockets deprecation warnings](https://github.com/sass/sassc-rails/pull/76)
   - [Sprockets 4 compatibility](https://github.com/sass/sassc-rails/pull/65)

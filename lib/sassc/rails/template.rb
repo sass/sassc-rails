@@ -1,73 +1,46 @@
 # frozen_string_literal: true
 
 require "sprockets/version"
-
-begin
-  require 'sprockets/sass_processor'
-rescue LoadError
-  require "sprockets/sass_template"
-end
-
+require 'sprockets/sass_processor'
 require "sprockets/utils"
 
 module SassC::Rails
-
-  class SassTemplate < defined?(Sprockets::SassProcessor) ? Sprockets::SassProcessor : Sprockets::SassTemplate
-    module Sprockets3
-      def call(input)
-        context = input[:environment].context_class.new(input)
-
-        options = {
-          filename: input[:filename],
-          line_comments: line_comments?,
-          syntax: self.class.syntax,
-          load_paths: input[:environment].paths,
-          importer: SassC::Rails::Importer,
-          sprockets: {
-            context: context,
-            environment: input[:environment],
-            dependencies: context.metadata[:dependency_paths]
-          }
-        }.merge(config_options) { |*args| safe_merge(*args) }
-
-        engine = ::SassC::Engine.new(input[:data], options)
-
-        css = Sprockets::Utils.module_include(::SassC::Script::Functions, @functions) do
-          engine.render
-        end
-
-        context.metadata.merge(data: css)
+  class SassTemplate < Sprockets::SassProcessor
+    def initialize(options = {}, &block)
+      @cache_version = options[:cache_version]
+      @cache_key = "#{self.class.name}:#{VERSION}:#{SassC::VERSION}:#{@cache_version}".freeze
+      #@importer_class = options[:importer] || Sass::Importers::Filesystem
+      @sass_config = options[:sass_config] || {}
+      @functions = Module.new do
+        include Functions
+        include options[:functions] if options[:functions]
+        class_eval(&block) if block_given?
       end
     end
 
-    module Sprockets2
-      def self.included(base)
-        base.class_eval do
-          self.default_mime_type = "text/css"
-        end
+    def call(input)
+      context = input[:environment].context_class.new(input)
+
+      options = {
+        filename: input[:filename],
+        line_comments: line_comments?,
+        syntax: self.class.syntax,
+        load_paths: input[:environment].paths,
+        importer: SassC::Rails::Importer,
+        sprockets: {
+          context: context,
+          environment: input[:environment],
+          dependencies: context.metadata[:dependency_paths]
+        }
+      }.merge!(config_options) { |key, left, right| safe_merge(key, left, right) }
+
+      engine = ::SassC::Engine.new(input[:data], options)
+
+      css = Sprockets::Utils.module_include(::SassC::Script::Functions, @functions) do
+        engine.render
       end
 
-      def evaluate(context, locals, &block)
-        options = {
-          filename: eval_file,
-          line_comments: line_comments?,
-          syntax: syntax,
-          load_paths: context.environment.paths,
-          importer: SassC::Rails::Importer,
-          sprockets: {
-            context: context,
-            environment: context.environment
-          }
-        }.merge(config_options, &method(:safe_merge))
-
-        ::SassC::Engine.new(data, options).render
-      end
-    end
-
-    if Sprockets::VERSION > "3.0.0"
-      include Sprockets3
-    else
-      include Sprockets2
+      context.metadata.merge(data: css)
     end
 
     def config_options
@@ -97,29 +70,43 @@ module SassC::Rails
       Rails.application.config.sass.line_comments
     end
 
-    def safe_merge(key, left, right)
+    def safe_merge(_key, left, right)
       if [left, right].all? { |v| v.is_a? Hash }
-        left.merge(right) { |*args| safe_merge *args }
+        left.merge(right) { |k, l, r| safe_merge(k, l, r) }
       elsif [left, right].all? { |v| v.is_a? Array }
         (left + right).uniq
       else
         right
       end
     end
+
+    # The methods in the Functions module were copied here from sprockets in order to
+    # override the Value class names (e.g. ::SassC::Script::Value::String)
+    module Functions
+      def asset_path(path, options = {})
+        path = path.value
+
+        path, _, query, fragment = URI.split(path)[5..8]
+        path     = sprockets_context.asset_path(path, options)
+        query    = "?#{query}" if query
+        fragment = "##{fragment}" if fragment
+
+        ::SassC::Script::Value::String.new("#{path}#{query}#{fragment}", :string)
+      end
+
+      def asset_url(path, options = {})
+        ::SassC::Script::Value::String.new("url(#{asset_path(path, options).value})")
+      end
+
+      def asset_data_url(path)
+        url = sprockets_context.asset_data_uri(path.value)
+        ::SassC::Script::Value::String.new("url(" + url + ")")
+      end
+    end
   end
 
   class ScssTemplate < SassTemplate
-    unless Sprockets::VERSION > "3.0.0"
-      self.default_mime_type = 'text/css'
-    end
-
-    # Sprockets 3
     def self.syntax
-      :scss
-    end
-
-    # Sprockets 2
-    def syntax
       :scss
     end
   end
