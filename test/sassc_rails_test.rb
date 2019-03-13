@@ -271,6 +271,16 @@ class SassRailsTest < MiniTest::Unit::TestCase
   #  assert_match /\.import-css-application/, css_output
   #end
 
+  def test_globbed_imports_work_with_multiple_extensions
+    initialize!
+
+    asset = render_asset("glob_multiple_extensions_test.css")
+
+    assert_equal <<-CSS, asset
+.glob{margin:0}
+    CSS
+  end
+
   def test_globbed_imports_work_when_globbed_file_is_changed
     skip "This seems to work in practice, possible test setup problem"
 
