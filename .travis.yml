@@ -4,6 +4,9 @@ bundler_args: "--binstubs --standalone --without documentation --path ../bundle"
 
 script: "bundle exec rake test"
 
+before_install:
+  - gem install bundler --version '< 2'
+
 gemfile:
   - gemfiles/sprockets-rails_3_0.gemfile
   - gemfiles/sprockets-rails_2_3.gemfile
