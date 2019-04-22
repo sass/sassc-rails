@@ -85,6 +85,8 @@ is maintained by [Ryan Boland](https://ryanboland.com) and [awesome contributors
 
 ## Changelog
 
+- **2.1.1**
+  - [Fix Scaffolding](https://github.com/sass/sassc-rails/pull/119)
 - **2.1.0**
   - [JRuby support](https://github.com/sass/sassc-rails/pull/113)
   - [SCSS / SASS scaffolding](https://github.com/sass/sassc-rails/pull/112)
