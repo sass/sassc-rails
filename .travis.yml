@@ -13,8 +13,9 @@ gemfile:
   - gemfiles/rails_5_2.gemfile
 
 rvm:
-  - 2.4.4
-  - 2.5.1
+  - 2.4.6
+  - 2.5.5
+  - 2.6.3
   - jruby
 
 notifications:
