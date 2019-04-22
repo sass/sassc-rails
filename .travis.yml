@@ -22,5 +22,10 @@ rvm:
   #- 2.6.3
   - jruby
 
+matrix:
+  allow_failures:
+    - gemfile: gemfiles/rails_4_2.gemfile
+      rvm: jruby
+
 notifications:
   email: false
