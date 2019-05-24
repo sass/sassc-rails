@@ -32,7 +32,11 @@ module SassC::Rails
           environment: input[:environment],
           dependencies: context.metadata[:dependency_paths]
         }
-      }.merge!(config_options) { |key, left, right| safe_merge(key, left, right) }
+      }.merge!(config_options)
+
+      if load_paths
+        options[:load_paths] += load_paths
+      end
 
       engine = ::SassC::Engine.new(input[:data], options)
 
@@ -44,7 +48,7 @@ module SassC::Rails
     end
 
     def config_options
-      opts = { style: sass_style, load_paths: load_paths }
+      opts = { style: sass_style }
 
 
       if Rails.application.config.sass.inline_source_maps
@@ -63,21 +67,11 @@ module SassC::Rails
     end
 
     def load_paths
-      Rails.application.config.sass.load_paths || []
+      Rails.application.config.sass.load_paths
     end
 
     def line_comments?
       Rails.application.config.sass.line_comments
-    end
-
-    def safe_merge(_key, left, right)
-      if [left, right].all? { |v| v.is_a? Hash }
-        left.merge(right) { |k, l, r| safe_merge(k, l, r) }
-      elsif [left, right].all? { |v| v.is_a? Array }
-        (left + right).uniq
-      else
-        right
-      end
     end
 
     # The methods in the Functions module were copied here from sprockets in order to
