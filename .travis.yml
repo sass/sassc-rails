@@ -15,6 +15,7 @@ gemfile:
   - gemfiles/sprockets_4_0.gemfile
   - gemfiles/rails_4_2.gemfile
   - gemfiles/rails_5_2.gemfile
+  - gemfiles/rails_6_0.gemfile
 
 rvm:
   - 2.4.6
@@ -26,6 +27,11 @@ matrix:
   allow_failures:
     - gemfile: gemfiles/rails_4_2.gemfile
       rvm: jruby
+    - gemfile: gemfiles/rails_6_0.gemfile
+      rvm: jruby
+  exclude:
+    - gemfile: gemfiles/rails_6_0.gemfile
+      rvm: 2.4.6
 
 notifications:
   email: false
