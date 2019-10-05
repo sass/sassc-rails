@@ -105,6 +105,7 @@ module SassC
           search_paths.select! do |path|
             File.directory?(path)
           end
+          search_paths << specified_dir if File.directory?(specified_dir)
         end
 
         search_paths.each do |search_path|
