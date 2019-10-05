@@ -112,7 +112,12 @@ module SassC
             file_name = prefix + specified_file
 
             EXTENSIONS.each do |extension|
-              try_path = File.join(search_path, file_name + extension.postfix)
+              try_file_name = if file_name.ends_with?(extension.postfix)
+                                file_name
+                              else
+                                file_name + extension.postfix
+                              end
+              try_path = File.join(search_path, try_file_name)
               if File.exist?(try_path)
                 record_import_as_dependency try_path
                 return extension.import_for(try_path, parent_dir, options)

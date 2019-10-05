@@ -152,6 +152,20 @@ class SassRailsTest < MiniTest::Test
     assert_match /partial_in_load_paths/,    css_output
   end
 
+  def test_sass_imports_with_extensions
+    initialize!
+
+    css_output = render_asset("imports_with_extensions_test.css")
+    assert_match /css-scss-handler/,         css_output
+    assert_match /css-sass-handler/,         css_output
+    assert_match /sass-erb-handler/,         css_output
+    assert_match /scss-erb-handler/,         css_output
+    assert_match /css-erb-handler/,          css_output
+    assert_match /partial-scss/,             css_output
+    assert_match /partial-sass/,             css_output
+    assert_match /plain-old-css/,            css_output
+  end
+
   def test_style_config_item_is_defaulted_to_expanded_in_development_mode
     initialize_dev!
     assert_equal :expanded, Rails.application.config.sass.style
