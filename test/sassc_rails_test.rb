@@ -225,6 +225,7 @@ class SassRailsTest < MiniTest::Test
   end
 
   def test_sassc_compression_is_used
+    @app.config.assets.debug = false
     engine = stub(render: "")
     SassC::Engine.expects(:new).returns(engine)
     SassC::Engine.expects(:new).with("", {style: :compressed}).returns(engine)
@@ -235,12 +236,25 @@ class SassRailsTest < MiniTest::Test
   end
 
   def test_allows_for_inclusion_of_inline_source_maps
+    @app.config.assets.debug = false
     @app.config.sass.inline_source_maps = true
     initialize_dev!
 
     asset = render_asset("application.css")
     assert_match /.hello/, asset
     assert_match /sourceMappingURL/, asset
+  end
+
+  def test_adds_source_map_in_debug_mode
+    unless Sprockets::VERSION.start_with?("3")
+      @app.config.assets.debug = true
+      initialize_dev!
+
+      asset = render_asset("glob_test.debug.css")
+      assert_equal app.assets["glob_test.css"].metadata[:map]["sections"].first["map"]["sources"], ["glob_test.source.scss", "globbed/globbed.source.scss", "globbed/nested/nested_glob.source.scss"]
+      assert_match /.globbed/, asset
+      assert_match /sourceMappingURL/, asset
+    end
   end
 
   #test 'sprockets require works correctly' do
