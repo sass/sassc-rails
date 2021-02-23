@@ -246,7 +246,7 @@ class SassRailsTest < MiniTest::Test
   end
 
   def test_adds_source_map_in_debug_mode
-    if Sprockets::VERSION.start_with?("4")
+    unless Sprockets::VERSION.start_with?("3")
       @app.config.assets.debug = true
       initialize_dev!
 
