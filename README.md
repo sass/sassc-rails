@@ -40,12 +40,6 @@ Note, as indicated, these source maps are *inline*.  They will not generate addi
 files or anything like that.  Instead, they will be appended to the compiled
 application.css file.
 
-## LibSass Compatibility With Ruby Sass
-
-For a look at the compatibility between Ruby Sass and LibSass, check this
-[compatibility chart](http://sass-compatibility.github.io/) out.
-
-
 ## Installation
 
 Add this line to your application's Gemfile:
