@@ -43,7 +43,7 @@ application.css file.
 ## LibSass Compatibility With Ruby Sass
 
 For a look at the compatibility between Ruby Sass and LibSass, check this
-[compatibility chart](http://sass-compatibility.github.io/) out.
+[compatibility chart](https://kittygiraudel.github.io/sass-compatibility/) out.
 
 
 ## Installation
