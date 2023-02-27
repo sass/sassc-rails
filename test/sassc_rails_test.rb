@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require 'active_support/testing/isolation'
 
 class SassRailsTest < MiniTest::Test
+  include ActiveSupport::Testing::Isolation
+
   attr_reader :app
   attr_reader :test_dir
 
