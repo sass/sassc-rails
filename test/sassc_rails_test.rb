@@ -4,14 +4,18 @@ require "test_helper"
 
 class SassRailsTest < MiniTest::Test
   attr_reader :app
+  attr_reader :test_dir
 
   def setup
     Rails.application = nil
 
+    @test_dir = Dir.mktmpdir("sassc-rails")
+    FileUtils.cp_r File.join(File.dirname(__FILE__), "dummy"), test_dir
+
     @app = Class.new(Rails::Application)
     @app.config.active_support.deprecation = :log
     @app.config.eager_load = false
-    @app.config.root = File.join(File.dirname(__FILE__), "dummy")
+    @app.config.root = File.join(test_dir, "dummy")
     @app.config.log_level = :debug
 
     # reset config back to default
@@ -30,8 +34,7 @@ class SassRailsTest < MiniTest::Test
   end
 
   def teardown
-    directory = "#{Rails.root}/tmp"
-    FileUtils.remove_dir(directory) if File.directory?(directory)
+    FileUtils.remove_dir(test_dir) if File.directory?(test_dir)
   end
 
   def render_asset(asset)
@@ -169,7 +172,7 @@ class SassRailsTest < MiniTest::Test
 
     css_output = render_asset("css_scss_handler.css")
     assert_match %r{/* line 1}, css_output
-    assert_match %r{.+test/dummy/app/assets/stylesheets/css_scss_handler.css.scss}, css_output
+    assert_match %r{.+#{test_dir}/dummy/app/assets/stylesheets/css_scss_handler.css.scss}, css_output
   end
 
   def test_context_is_being_passed_to_erb_render
@@ -287,7 +290,7 @@ class SassRailsTest < MiniTest::Test
     begin
       initialize!
 
-      new_file = File.join(File.dirname(__FILE__), 'dummy', 'app', 'assets', 'stylesheets', 'globbed', 'new_glob.scss')
+      new_file = File.join(test_dir, 'dummy', 'app', 'assets', 'stylesheets', 'globbed', 'new_glob.scss')
 
       File.open(new_file, 'w') do |file|
         file.puts '.new-file-test { color: #000; }'
@@ -314,7 +317,7 @@ class SassRailsTest < MiniTest::Test
 
       css_output = render_asset("glob_test.css")
       refute_match /changed-file-test/, css_output
-      new_file = File.join(File.dirname(__FILE__), 'dummy', 'app', 'assets', 'stylesheets', 'globbed', 'new_glob.scss')
+      new_file = File.join(test_dir, 'dummy', 'app', 'assets', 'stylesheets', 'globbed', 'new_glob.scss')
 
       File.open(new_file, 'w') do |file|
         file.puts '.changed-file-test { color: #000; }'
