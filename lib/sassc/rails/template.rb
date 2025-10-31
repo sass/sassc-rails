@@ -20,6 +20,7 @@ module SassC::Rails
 
     def call(input)
       context = input[:environment].context_class.new(input)
+      support_source_maps = Rails.application.config.assets.debug && !Sprockets::VERSION.start_with?("3")
 
       options = {
         filename: input[:filename],
@@ -34,13 +35,34 @@ module SassC::Rails
         }
       }.merge!(config_options) { |key, left, right| safe_merge(key, left, right) }
 
+      if support_source_maps
+        options.merge!(
+          source_map_contents: false,
+          source_map_file: "#{input[:filename]}.map",
+          omit_source_map_url: true,
+        )
+      end
+
       engine = ::SassC::Engine.new(input[:data], options)
 
       css = Sprockets::Utils.module_include(::SassC::Script::Functions, @functions) do
         engine.render
       end
 
-      context.metadata.merge(data: css)
+      return context.metadata.merge(data: css) unless support_source_maps
+
+      begin
+        map = Sprockets::SourceMapUtils.format_source_map(JSON.parse(engine.source_map), input)
+        map = Sprockets::SourceMapUtils.combine_source_maps(input[:metadata][:map], map)
+
+        engine.dependencies.each do |dependency|
+          context.metadata[:dependencies] << Sprockets::URIUtils.build_file_digest_uri(dependency.filename)
+        end
+      rescue SassC::NotRenderedError
+        map = input[:metadata][:map]
+      end
+
+      context.metadata.merge(data: css, map: map)
     end
 
     def config_options
