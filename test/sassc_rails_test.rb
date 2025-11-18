@@ -45,6 +45,7 @@ class SassRailsTest < MiniTest::Test
 
   def initialize_dev!
     Rails.env = "development"
+    Dir.chdir(File.join(File.dirname(__FILE__), '../../../'))
     @app.initialize!
   end
 
@@ -168,6 +169,7 @@ class SassRailsTest < MiniTest::Test
     initialize_dev!
 
     css_output = render_asset("css_scss_handler.css")
+
     assert_match %r{/* line 1}, css_output
     assert_match %r{.+test/dummy/app/assets/stylesheets/css_scss_handler.css.scss}, css_output
   end
