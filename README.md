@@ -1,4 +1,4 @@
-# SassC::Rails [![Build Status](https://travis-ci.org/sass/sassc-rails.svg)](https://travis-ci.org/sass/sassc-rails) [![Gem Version](https://badge.fury.io/rb/sassc-rails.svg)](http://badge.fury.io/rb/sassc-rails)
+# SassC::Rails [![Build Status](https://travis-ci.com/sass/sassc-rails.svg)](https://travis-ci.com/sass/sassc-rails) [![Gem Version](https://badge.fury.io/rb/sassc-rails.svg)](http://badge.fury.io/rb/sassc-rails)
 
 **[LibSass has reached its end of life](https://sass-lang.com/blog/libsass-is-end-of-life).**
 It will no longer receive updates of any kind. Users should migrate to
